@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="WolframAlphaJavaLibrary">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../../../../Java/WolframAlphaJavaLibrary" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../../../../Java/WolframAlphaJavaLibrary/SampleProgram" />
+      <root url="file://$PROJECT_DIR$/../../../../Java/WolframAlphaJavaLibrary/Source" />
+    </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/../../../../Java/WolframAlphaJavaLibrary" recursive="false" />
+  </library>
+</component>

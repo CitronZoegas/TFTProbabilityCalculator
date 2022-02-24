@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$/TFTProbabilityCalculator" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/TFT-Probabiltiy-Calculator" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/main/java/Controller/TFT-Probability-Calculator" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/src/main/java/Controller/TFTCalculatingProbability" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/tftcalculator" vcs="Git" />
+  </component>
+</project>
