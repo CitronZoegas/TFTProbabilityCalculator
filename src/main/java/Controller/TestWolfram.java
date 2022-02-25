@@ -4,15 +4,17 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class TestWolfram {
-
+    private Controller controller;
     private static final DecimalFormat df = new DecimalFormat();
     private static final String appid = "XXXXXX";
+    private static final int MAX_THREADS = 10;
+    private double unitPercentage;
+    private int uniqueUnitAmount,amountOfGoldToRoll;
 
-    public TestWolfram() {
-
-    }
     /**
      *
      * Original equation (1 –(1 –(.unitPercentage)/(uniqueUnitAmount))^((5/2)*amountOfGoldToRoll))
@@ -62,21 +64,36 @@ public class TestWolfram {
 
     /**
      * Getting correct output from API GET request
-     *
      * Multiplying return value by 100 to get the correct presentation for a % number.
      * @param originalString
      * @param firstIndex
      * @param lastIndex
      * @return
      */
+
     public double managePercentageOutput(String originalString, int firstIndex, int lastIndex) {
         String percentageOutput = originalString.substring(firstIndex,lastIndex);
         return Double.parseDouble(percentageOutput)*100;
     }
+
+    /**
+     * To use this method elsewhere, remove the "+10" in the return statement.
+     *
+     * @param str , The string you want to search through
+     * @param substr , The string you want to find in the "str" String.
+     * @param repeatedAmountOfTimes , Amount of times the String you are looking for is ignored to find the one you are looking for. For an example:
+     *        I am looking for the 3rd output of the String "plaintext" because I know 6-10 characters after that is my mathematical equation answer
+     *        from wolfram API.
+     * @return integer;
+     */
     public int ordinalIndexOf(String str, String substr, int repeatedAmountOfTimes) {
         int position = str.indexOf(substr);
         while (--repeatedAmountOfTimes > 0 && position != -1)
             position = str.indexOf(substr, position + 1);
         return position+10;
     }
+    public void setController(Controller controller) {
+        this.controller = controller;
+    }
+
 }
