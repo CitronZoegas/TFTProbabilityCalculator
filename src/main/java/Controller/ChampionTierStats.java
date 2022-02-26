@@ -2,17 +2,35 @@ package Controller;
 
 public class ChampionTierStats {
 
-    private static int userLevel = 1;
+    private static int champCost = 0;
 
-    public static void setChampionPercentage(int userLevel) {
-        ChampionTierStats.userLevel = userLevel;
+
+    public static int[][] levels =  {
+            {100,0,0,0,0},
+            {100,0,0,0,0},
+            {75,25,0,0,0},
+            {55,30,15,0,0},
+            {45,33,20,2,0},
+            {25,40,30,5,0},
+            {19,30,35,15,1},
+            {16,20,35,25,4},
+            {9,15,30,30,16},
+            {5,10,20,40,25},
+            {1,2,12,50,35}
+    };
+
+    public static void setChampionCost(int championCost) {
+        ChampionTierStats.champCost = championCost;
     }
-    public static int getChampionPercentage(){
-        return userLevel;
+    public static int getChampionCost(){
+        return champCost;
     }
-    public static int[][] levels = {level1 = new int[]{100, 0, 0, 0, 0}};
 
 
+
+    public static int[][] getChampionPercentage(){
+        return levels;
+    }
 
     public static int[] level1 = {100,0,0,0,0};
     public static int[] level2 = {100,0,0,0,0};
@@ -26,7 +44,7 @@ public class ChampionTierStats {
     public static int[] level10 = {5,10,20,40,25};
     public static int[] level11 = {1,2,12,50,35};
 
-    public static int getUserLevel1() {
-        return level1[userLevel];
+    public static int[][] getUserLevel1() {
+        return levels;
     }
 }

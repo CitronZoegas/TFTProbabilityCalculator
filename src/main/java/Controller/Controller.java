@@ -5,29 +5,31 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.net.URL;
-import java.text.NumberFormat;
+import java.util.Arrays;
 import java.util.ResourceBundle;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class Controller extends Thread implements Initializable {
-
     @FXML
-    private Button champTier1;
+    private TextField amountOfGold;
     @FXML
-    private Button champTier2;
+    private RadioButton champTier1;
     @FXML
-    private Button champTier3;
+    private RadioButton champTier2;
     @FXML
-    private Button champTier4;
+    private RadioButton champTier3;
     @FXML
-    private Button champTier5;
+    private RadioButton champTier4;
+    @FXML
+    private RadioButton champTier5;
     @FXML
     TextField numberOfCopies;
+    @FXML
+    private Spinner<Integer> levelSpinner;
+    final int initialValue = 1;
+    SpinnerValueFactory<Integer> svf = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,11,initialValue);
     @FXML
     private BarChart<?,?> barChart;
     private TestWolfram testWolfram;
@@ -59,90 +61,108 @@ public class Controller extends Thread implements Initializable {
 
     @FXML
     public void getChampionTier1(ActionEvent event){
-        if(champTier1.getText().isEmpty() || validateIntegerInput(champTier1.getText())){
-            System.out.println("Set a value dummy");
-        }else{
-            TestWolfram twf = new TestWolfram();
-            twf.callWolfram(ChampionTierStats.getChampionPercentage(),0,0);
-        }
+        ChampionTierStats.setChampionCost(0);
+        champTier2.setSelected(false);
+        champTier3.setSelected(false);
+        champTier4.setSelected(false);
+        champTier5.setSelected(false);
     }
+
     @FXML
     public void getChampionTier2(ActionEvent event){
-        if(champTier2.getText().isEmpty() || validateIntegerInput(champTier2.getText())){
-            System.out.println("Set a value dummy");
-        }else{
-            TestWolfram twf = new TestWolfram();
-            twf.callWolfram(ChampionTierStats.getChampionPercentage(),0,0);
-        }
+        ChampionTierStats.setChampionCost(1);
+        champTier1.setSelected(false);
+        champTier3.setSelected(false);
+        champTier4.setSelected(false);
+        champTier5.setSelected(false);
     }
 
     @FXML
     public void getChampionTier3(ActionEvent event){
-        if(champTier3.getText().isEmpty() || validateIntegerInput(champTier3.getText())){
-            System.out.println("Set a value dummy");
-        }else{
-            TestWolfram twf = new TestWolfram();
-            twf.callWolfram(ChampionTierStats.getChampionPercentage(),0,0);
-        }
+        ChampionTierStats.setChampionCost(2);
+        champTier1.setSelected(false);
+        champTier2.setSelected(false);
+        champTier4.setSelected(false);
+        champTier5.setSelected(false);
     }
 
     @FXML
     public void getChampionTier4(ActionEvent event){
-        if(champTier4.getText().isEmpty() || validateIntegerInput(champTier4.getText())){
-            System.out.println("Set a value dummy");
-        }else{
-            TestWolfram twf = new TestWolfram();
-            twf.callWolfram(ChampionTierStats.getChampionPercentage(),0,0);
-        }
+        ChampionTierStats.setChampionCost(3);
+        champTier1.setSelected(false);
+        champTier2.setSelected(false);
+        champTier3.setSelected(false);
+        champTier5.setSelected(false);
     }
 
     @FXML
     public void getChampionTier5(ActionEvent event){
-        if(champTier5.getText().isEmpty() || validateIntegerInput(champTier5.getText())){
-            System.out.println("Set a value dummy");
-        }else{
-            TestWolfram twf = new TestWolfram();
-            twf.callWolfram(ChampionTierStats.getChampionPercentage(),0,0);
-        }
+        ChampionTierStats.setChampionCost(4);
+        champTier1.setSelected(false);
+        champTier2.setSelected(false);
+        champTier3.setSelected(false);
+        champTier4.setSelected(false);
     }
 
     public void updateCharts() {
 
     }
 
-    private void getNumberOfCopiesLeft(){
-
+    private int getNumberOfCopiesLeft(){
+        return 12;
     }
 
-    private void getNumberOfXChampionsGone() {
-
+    public int getNumberOfXChampionsGone() {
+        //return Integer.parseInt(numberOfCopies.getText());
+        return 0;
     }
 
-    private void getHowMuchGold() {
+    private int getHowMuchGold() {
+        return Integer.parseInt(amountOfGold.getText());
+    }
+
+
+    /**
+     * HERE ARE THE DIFFERENT TYPES OF CALCULATIONS YOU CAN DO
+     */
+    public void calculateNormal() {
+
+        int[] userLevel = (ChampionTierStats.getChampionPercentage()[Integer.parseInt((champTier1.getText()))]);
+         // 0 = 1;
+        TestWolfram twf = new TestWolfram();
+
+        twf.callWolfram((userLevel),getNumberOfCopiesLeft(),getHowMuchGold(),ChampionTierStats.getChampionCost());
+    }
+
+    public void calculateSweat() {
 
     }
 
     @Override
     public void run() {
         try{
-            testWolfram.callWolfram(1,0,0);
+            //testWolfram.callWolfram(1,0,0);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    public void setWolfram(TestWolfram testWolfram){
-        this.testWolfram = testWolfram;
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        levelSpinner.setValueFactory(svf);
         testWolfram = new TestWolfram();
         XYChart.Series series = new XYChart.Series();
+        XYChart.Series series1 = new XYChart.Series();
+        XYChart.Series series2 = new XYChart.Series();
         series.setName("1 Champ");
+        series1.setName("2 Champ");
+        series2.setName("3 Champ");
         series.getData().add(new XYChart.Data("X Cost",90));
-        series.getData().add(new XYChart.Data("Y Cost",40));
-        series.getData().add(new XYChart.Data("Z Cost",9));
+        series1.getData().add(new XYChart.Data("Y Cost",40));
+        series2.getData().add(new XYChart.Data("Z Cost",9));
         barChart.getData().addAll(series);
-
+        barChart.getData().addAll(series1);
+        barChart.getData().addAll(series2);
     }
 }

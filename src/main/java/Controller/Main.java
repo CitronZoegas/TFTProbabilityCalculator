@@ -12,10 +12,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
 public class Main extends Application {
+
     public static Main instance;
     private Controller controller;
 
@@ -24,7 +24,6 @@ public class Main extends Application {
         try{
             controller = new Controller();
             initializeConnection();
-
             FXMLLoader fxmlloader = new FXMLLoader(Main.class.getResource("/FXML/clientPage.fxml"));
             Controller controller = fxmlloader.getController();
             Parent root = fxmlloader.load();

@@ -3,6 +3,7 @@ package Controller;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DecimalFormat;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -13,25 +14,31 @@ public class TestWolfram {
     private static final String appid = "XXXXXX";
     private static final int MAX_THREADS = 10;
     private double unitPercentage;
-    private int uniqueUnitAmount,amountOfGoldToRoll;
+    private int uniqueUnitAmount,amountOfGoldToRoll, championTier;
 
     /**
      *
-     * Original equation (1 –(1 –(.unitPercentage)/(uniqueUnitAmount))^((5/2)*amountOfGoldToRoll))
+     * Original equation (1 –(1 –(.unitPercentagesArray)/(uniqueUnitAmount))^((5/2)*amountOfGoldToRoll))
      *
-     * @param unitPercentage
+     * @param unitPercentagesArray
      * @param uniqueUnitAmount
      * @param amountOfGoldToRoll
      */
-    public void callWolfram(double unitPercentage, int uniqueUnitAmount, int amountOfGoldToRoll) {
 
-        String expression2 = "(1+%E2%80%93(1+%E2%80%93("+unitPercentage+")%2F("+uniqueUnitAmount+"))%5E((5%2F2)*"+amountOfGoldToRoll+"))&plaintext&output=XML&appid="+appid;
+    public void callWolfram(int[] unitPercentagesArray, int uniqueUnitAmount, int amountOfGoldToRoll, int championTier) { // championTier is int 1-5
+
+        System.out.println( " % Array: "+ (Arrays.toString(unitPercentagesArray)) +" unique champs:"+ uniqueUnitAmount +" amount of gold: "+ amountOfGoldToRoll +" Championtier: "+ championTier);
+        int ChampionPercentage = unitPercentagesArray[championTier];
+        System.out.println(ChampionPercentage);
+        String expression2 = "(1+%E2%80%93(1+%E2%80%93("+ChampionPercentage+")%2F("+uniqueUnitAmount+"))%5E((5%2F2)*"+amountOfGoldToRoll+"))&plaintext&output=XML&appid="+appid;
+
         try{
 
             URL url = new URL("https://api.wolframalpha.com/v2/query?input="+expression2);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.connect();
+            System.out.println("connected");
 
             int responeNumber = conn.getResponseCode();
 
@@ -92,8 +99,4 @@ public class TestWolfram {
             position = str.indexOf(substr, position + 1);
         return position+10;
     }
-    public void setController(Controller controller) {
-        this.controller = controller;
-    }
-
 }
