@@ -21,32 +21,27 @@
       </ImageView>
       <AnchorPane layoutY="163.0" prefHeight="564.0" prefWidth="266.0">
          <children>
-            <Button layoutX="7.0" layoutY="307.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="44.0" text="1" />
-            <Button layoutX="202.0" layoutY="307.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="44.0" text="5" />
-            <Button layoutX="154.0" layoutY="307.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="44.0" text="4" />
-            <Button layoutX="54.0" layoutY="307.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="44.0" text="2" />
-            <Button layoutX="104.0" layoutY="307.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="44.0" text="3" />
             <Label layoutX="14.0" layoutY="3.0" prefHeight="37.0" prefWidth="251.0" text="CHAMPION TIER:" />
             <Label layoutX="9.0" layoutY="384.0" prefHeight="17.0" prefWidth="67.0" text="NUMBER OF" />
             <Label layoutX="79.0" layoutY="384.0" prefHeight="17.0" prefWidth="10.0" text="X" />
             <Label layoutX="92.0" layoutY="384.0" prefHeight="17.0" prefWidth="142.0" text="COST CHAMPIONS GONE:" />
             <Label layoutX="14.0" layoutY="401.0" prefHeight="17.0" prefWidth="238.0" text="(on other peoples boards and benches)" />
-            <TextField layoutX="8.0" layoutY="418.0" prefHeight="37.0" prefWidth="251.0" text="0" />
-            <Label layoutX="8.0" layoutY="87.0" prefHeight="37.0" prefWidth="251.0" text="HOW MUCH GOLD WILL YOU ROLL:" />
-            <TextField fx:id="amountOfGold" layoutX="7.0" layoutY="124.0" prefHeight="37.0" prefWidth="251.0" text="0" />
+            <TextField fx:id="numberOfCopies" layoutX="8.0" layoutY="418.0" prefHeight="37.0" prefWidth="251.0" text="0" />
+            <Label layoutX="8.0" layoutY="68.0" prefHeight="37.0" prefWidth="251.0" text="HOW MUCH GOLD WILL YOU ROLL:" />
+            <TextField fx:id="amountOfGold" layoutX="7.0" layoutY="98.0" prefHeight="37.0" prefWidth="251.0" text="0" />
             <ImageView fitHeight="10.0" fitWidth="251.0" layoutX="8.0" layoutY="272.0" pickOnBounds="true" preserveRatio="true" />
             <Label layoutX="7.0" layoutY="358.0" prefHeight="17.0" prefWidth="251.0" text="SWEAT SETTINGS:" />
             <Label layoutX="9.0" layoutY="451.0" prefHeight="37.0" prefWidth="251.0" text="HOW MUCH GOLD TO LEVEL:" />
             <TextField layoutX="9.0" layoutY="481.0" prefHeight="37.0" prefWidth="251.0" text="0" />
-            <Label layoutX="9.0" layoutY="165.0" prefHeight="17.0" prefWidth="251.0" text="WHAT IS YOUR LEVEL:" />
-            <Button layoutX="7.0" layoutY="216.0" mnemonicParsing="false" onAction="#calculateNormal" prefHeight="37.0" prefWidth="122.0" text="Calculate" />
-            <Spinner fx:id="levelSpinner" editable="true" layoutX="9.0" layoutY="185.0" prefHeight="25.0" prefWidth="251.0" />
+            <Label layoutX="9.0" layoutY="140.0" prefHeight="17.0" prefWidth="251.0" text="WHAT IS YOUR LEVEL:" />
+            <Button layoutX="7.0" layoutY="194.0" mnemonicParsing="false" onAction="#calculateNormal" prefHeight="37.0" prefWidth="122.0" text="Calculate" />
+            <Spinner fx:id="levelSpinner" editable="true" layoutX="9.0" layoutY="160.0" prefHeight="25.0" prefWidth="251.0" />
             <Button layoutX="7.0" layoutY="525.0" mnemonicParsing="false" onAction="#calculateSweat" prefHeight="37.0" prefWidth="122.0" text="Sweat Calculate" />
-            <RadioButton fx:id="champTier1" layoutX="15.0" layoutY="64.0" mnemonicParsing="false" onAction="#getChampionTier1" text="1" />
-            <RadioButton fx:id="champTier2" layoutX="62.0" layoutY="64.0" mnemonicParsing="false" onAction="#getChampionTier2" text="2" />
-            <RadioButton fx:id="champTier3" layoutX="121.0" layoutY="64.0" mnemonicParsing="false" onAction="#getChampionTier3" text="3" />
-            <RadioButton fx:id="champTier4" layoutX="170.0" layoutY="64.0" mnemonicParsing="false" onAction="#getChampionTier4" text="4" />
-            <RadioButton fx:id="champTier5" layoutX="220.0" layoutY="64.0" mnemonicParsing="false" onAction="#getChampionTier5" text="5" />
+            <RadioButton fx:id="champTier1" layoutX="15.0" layoutY="40.0" mnemonicParsing="false" onAction="#getChampionTier1" text="1" />
+            <RadioButton fx:id="champTier2" layoutX="62.0" layoutY="40.0" mnemonicParsing="false" onAction="#getChampionTier2" text="2" />
+            <RadioButton fx:id="champTier3" layoutX="121.0" layoutY="40.0" mnemonicParsing="false" onAction="#getChampionTier3" text="3" />
+            <RadioButton fx:id="champTier4" layoutX="170.0" layoutY="40.0" mnemonicParsing="false" onAction="#getChampionTier4" text="4" />
+            <RadioButton fx:id="champTier5" layoutX="220.0" layoutY="40.0" mnemonicParsing="false" onAction="#getChampionTier5" text="5" />
          </children>
       </AnchorPane>
       <BarChart fx:id="barChart" layoutX="266.0" layoutY="148.0" prefHeight="486.0" prefWidth="614.0">
@@ -58,5 +53,6 @@
         </yAxis>
       </BarChart>
       <TextField layoutX="277.0" layoutY="634.0" prefHeight="80.0" prefWidth="645.0" text="This area will give you guidance you need to succeed in your games." />
+      <Button layoutX="860.0" layoutY="594.0" mnemonicParsing="false" onAction="#updateCharts" prefHeight="37.0" prefWidth="67.0" text="Update" />
    </children>
 </AnchorPane>

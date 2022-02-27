@@ -5,6 +5,8 @@
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -19,27 +21,27 @@
       </ImageView>
       <AnchorPane layoutY="163.0" prefHeight="564.0" prefWidth="266.0">
          <children>
-            <Label layoutX="9.0" layoutY="75.0" prefHeight="37.0" prefWidth="251.0" text="NUMBER OF COPIES OF CHAMPION:" />
-            <Button fx:id="champTier1" layoutX="14.0" layoutY="40.0" mnemonicParsing="false" onAction="#getChampionTier1" prefHeight="25.0" prefWidth="44.0" text="1" />
-            <Button fx:id="champTier5" layoutX="215.0" layoutY="40.0" mnemonicParsing="false" onAction="#getChampionTier5" prefHeight="25.0" prefWidth="44.0" text="5" />
-            <Button fx:id="champTier4" layoutX="167.0" layoutY="40.0" mnemonicParsing="false" onAction="#getChampionTier4" prefHeight="25.0" prefWidth="44.0" text="4" />
-            <Button fx:id="champTier2" layoutX="66.0" layoutY="40.0" mnemonicParsing="false" onAction="#getChampionTier2" prefHeight="25.0" prefWidth="44.0" text="2" />
-            <Button fx:id="champTier3" layoutX="117.0" layoutY="40.0" mnemonicParsing="false" onAction="#getChampionTier3" prefHeight="25.0" prefWidth="44.0" text="3" />
-            <Label layoutX="9.0" layoutY="3.0" prefHeight="37.0" prefWidth="251.0" text="CHAMPION TIER:" />
-            <TextField fx:id="numberOfCopies" layoutX="8.0" layoutY="113.0" prefHeight="37.0" prefWidth="251.0" text="0" />
-            <Label layoutX="9.0" layoutY="319.0" prefHeight="17.0" prefWidth="67.0" text="NUMBER OF" />
-            <Label layoutX="79.0" layoutY="319.0" prefHeight="17.0" prefWidth="10.0" text="X" />
-            <Label layoutX="92.0" layoutY="319.0" prefHeight="17.0" prefWidth="142.0" text="COST CHAMPIONS GONE:" />
-            <Label layoutX="14.0" layoutY="335.0" prefHeight="17.0" prefWidth="238.0" text="(on other peoples boards and benches)" />
-            <TextField layoutX="8.0" layoutY="352.0" prefHeight="37.0" prefWidth="251.0" text="0" />
-            <Label layoutX="8.0" layoutY="167.0" prefHeight="37.0" prefWidth="251.0" text="HOW MUCH GOLD WILL YOU ROLL:" />
-            <TextField layoutX="8.0" layoutY="204.0" prefHeight="37.0" prefWidth="251.0" text="0" />
+            <Label layoutX="14.0" layoutY="3.0" prefHeight="37.0" prefWidth="251.0" text="CHAMPION TIER:" />
+            <Label layoutX="9.0" layoutY="384.0" prefHeight="17.0" prefWidth="67.0" text="NUMBER OF" />
+            <Label layoutX="79.0" layoutY="384.0" prefHeight="17.0" prefWidth="10.0" text="X" />
+            <Label layoutX="92.0" layoutY="384.0" prefHeight="17.0" prefWidth="142.0" text="COST CHAMPIONS GONE:" />
+            <Label layoutX="14.0" layoutY="401.0" prefHeight="17.0" prefWidth="238.0" text="(on other peoples boards and benches)" />
+            <TextField fx:id="numberOfCopies" layoutX="8.0" layoutY="418.0" prefHeight="37.0" prefWidth="251.0" text="0" />
+            <Label layoutX="8.0" layoutY="68.0" prefHeight="37.0" prefWidth="251.0" text="HOW MUCH GOLD WILL YOU ROLL:" />
+            <TextField fx:id="amountOfGold" layoutX="7.0" layoutY="98.0" prefHeight="37.0" prefWidth="251.0" text="0" />
             <ImageView fitHeight="10.0" fitWidth="251.0" layoutX="8.0" layoutY="272.0" pickOnBounds="true" preserveRatio="true" />
-            <Label layoutX="8.0" layoutY="282.0" prefHeight="17.0" prefWidth="251.0" text="SWEAT SETTINGS:" />
-            <Label layoutX="8.0" layoutY="398.0" prefHeight="37.0" prefWidth="251.0" text="HOW MUCH GOLD TO LEVEL:" />
-            <TextField layoutX="8.0" layoutY="423.0" prefHeight="37.0" prefWidth="251.0" text="0" />
-            <TextField layoutX="8.0" layoutY="493.0" prefHeight="25.0" prefWidth="251.0" />
-            <Label layoutX="8.0" layoutY="467.0" prefHeight="17.0" prefWidth="251.0" text="Label" />
+            <Label layoutX="7.0" layoutY="358.0" prefHeight="17.0" prefWidth="251.0" text="SWEAT SETTINGS:" />
+            <Label layoutX="9.0" layoutY="451.0" prefHeight="37.0" prefWidth="251.0" text="HOW MUCH GOLD TO LEVEL:" />
+            <TextField layoutX="9.0" layoutY="481.0" prefHeight="37.0" prefWidth="251.0" text="0" />
+            <Label layoutX="9.0" layoutY="140.0" prefHeight="17.0" prefWidth="251.0" text="WHAT IS YOUR LEVEL:" />
+            <Button layoutX="7.0" layoutY="194.0" mnemonicParsing="false" onAction="#calculateNormal" prefHeight="37.0" prefWidth="122.0" text="Calculate" />
+            <Spinner fx:id="levelSpinner" editable="true" layoutX="9.0" layoutY="160.0" prefHeight="25.0" prefWidth="251.0" />
+            <Button layoutX="7.0" layoutY="525.0" mnemonicParsing="false" onAction="#calculateSweat" prefHeight="37.0" prefWidth="122.0" text="Sweat Calculate" />
+            <RadioButton fx:id="champTier1" layoutX="15.0" layoutY="40.0" mnemonicParsing="false" onAction="#getChampionTier1" text="1" />
+            <RadioButton fx:id="champTier2" layoutX="62.0" layoutY="40.0" mnemonicParsing="false" onAction="#getChampionTier2" text="2" />
+            <RadioButton fx:id="champTier3" layoutX="121.0" layoutY="40.0" mnemonicParsing="false" onAction="#getChampionTier3" text="3" />
+            <RadioButton fx:id="champTier4" layoutX="170.0" layoutY="40.0" mnemonicParsing="false" onAction="#getChampionTier4" text="4" />
+            <RadioButton fx:id="champTier5" layoutX="220.0" layoutY="40.0" mnemonicParsing="false" onAction="#getChampionTier5" text="5" />
          </children>
       </AnchorPane>
       <BarChart fx:id="barChart" layoutX="266.0" layoutY="148.0" prefHeight="486.0" prefWidth="614.0">
@@ -51,5 +53,6 @@
         </yAxis>
       </BarChart>
       <TextField layoutX="277.0" layoutY="634.0" prefHeight="80.0" prefWidth="645.0" text="This area will give you guidance you need to succeed in your games." />
+      <Button layoutX="860.0" layoutY="594.0" mnemonicParsing="false" onAction="#updateCharts" prefHeight="37.0" prefWidth="67.0" text="Update" />
    </children>
 </AnchorPane>

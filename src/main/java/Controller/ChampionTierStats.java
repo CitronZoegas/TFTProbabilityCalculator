@@ -2,33 +2,34 @@ package Controller;
 
 public class ChampionTierStats {
 
-    private static int champCost = 0;
+    private static int championCost = 0;
 
 
-    public static int[][] levels =  {
-            {100,0,0,0,0},
-            {100,0,0,0,0},
-            {75,25,0,0,0},
-            {55,30,15,0,0},
-            {45,33,20,2,0},
-            {25,40,30,5,0},
-            {19,30,35,15,1},
-            {16,20,35,25,4},
-            {9,15,30,30,16},
-            {5,10,20,40,25},
-            {1,2,12,50,35}
+    public static double[][] levels =  {
+            {1,0,0,0,0},
+            {1,0,0,0,0},
+            {0.75,0.25,0,0,0},
+            {0.55,0.30,0.15,0,0},
+            {0.45,0.33,0.20,0.02,0},
+            {0.25,0.40,0.30,0.05,0},
+            {0.19,0.30,0.35,0.15,0.01},
+            {0.16,0.20,0.35,0.25,0.04},
+            {0.09,0.15,0.30,0.30,0.16},
+            {0.05,0.10,0.20,0.40,0.25},
+            {0.01,0.02,0.12,0.50,0.35}
     };
 
     public static void setChampionCost(int championCost) {
-        ChampionTierStats.champCost = championCost;
+        ChampionTierStats.championCost = championCost;
     }
+
     public static int getChampionCost(){
-        return champCost;
+        return championCost;
     }
 
 
 
-    public static int[][] getChampionPercentage(){
+    public static double[][] getChampionPercentage(){
         return levels;
     }
 
@@ -44,7 +45,7 @@ public class ChampionTierStats {
     public static int[] level10 = {5,10,20,40,25};
     public static int[] level11 = {1,2,12,50,35};
 
-    public static int[][] getUserLevel1() {
+    public static double[][] getUserLevel1() {
         return levels;
     }
 }

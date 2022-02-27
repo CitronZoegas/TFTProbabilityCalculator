@@ -39,6 +39,18 @@ public class Main extends Application {
     private void initializeConnection(){
         instance = this;
     }
+    public static Scene getScene() {
+        Scene scene = null ;
+        try {
+            FXMLLoader fxmlloader = new FXMLLoader(Main.class.getResource("/FXML/clientPage.fxml"));
+            Parent root = fxmlloader.load();
+            scene = new Scene(root);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return scene;
+    }
 
     public static void main (String[] args){
         launch();
