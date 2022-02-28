@@ -10,7 +10,7 @@ public class TestWolfram {
 
     private Controller controller;
     private static final DecimalFormat df = new DecimalFormat();
-    private static final String appid = "HP7H85-G52GUJARPY";
+    private static final String appid = "XXXX";
     private static final int MAX_THREADS = 10;
     private double unitPercentage;
     private int uniqueUnitAmount,amountOfGoldToRoll, championTier;
