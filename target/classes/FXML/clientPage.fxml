@@ -11,8 +11,9 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="726.0" prefWidth="932.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Controller">
+<AnchorPane fx:id="groundLayer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="726.0" prefWidth="932.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Controller">
    <children>
       <ImageView fitHeight="148.0" fitWidth="932.0" pickOnBounds="true">
          <image>
@@ -44,7 +45,7 @@
             <RadioButton fx:id="champTier5" layoutX="220.0" layoutY="40.0" mnemonicParsing="false" onAction="#getChampionTier5" text="5" />
          </children>
       </AnchorPane>
-      <BarChart fx:id="barChart" layoutX="266.0" layoutY="148.0" prefHeight="486.0" prefWidth="614.0">
+      <BarChart fx:id="barChart" layoutX="277.0" layoutY="148.0" prefHeight="486.0" prefWidth="614.0">
         <xAxis>
           <CategoryAxis label="Amount of Champions" side="BOTTOM" />
         </xAxis>
@@ -54,5 +55,9 @@
       </BarChart>
       <TextField layoutX="277.0" layoutY="634.0" prefHeight="80.0" prefWidth="645.0" text="This area will give you guidance you need to succeed in your games." />
       <Button layoutX="860.0" layoutY="594.0" mnemonicParsing="false" onAction="#updateCharts" prefHeight="37.0" prefWidth="67.0" text="Update" />
+      <Circle fx:id="firstCircle" fill="#2197ff00" layoutX="865.0" layoutY="70.0" radius="65.0" stroke="#7dc4ff" strokeDashOffset="15.0" strokeType="INSIDE" strokeWidth="8.0" style="-fx-stroke-dash-array: 50;" />
+      <Circle fx:id="secondCircle" fill="#2197ff00" layoutX="865.0" layoutY="70.0" radius="29.0" stroke="#7dc4ff" strokeDashOffset="15.0" strokeType="INSIDE" strokeWidth="8.0" style="-fx-stroke-dash-array: 50;" />
+      <Circle fx:id="thirdCircle" fill="#2197ff00" layoutX="865.0" layoutY="70.0" radius="17.0" stroke="#7dc4ff" strokeDashOffset="15.0" strokeType="INSIDE" strokeWidth="6.0" style="-fx-stroke-dash-array: 27;" />
+      <Circle fx:id="fourthCircle" fill="#2197ff00" layoutX="865.0" layoutY="70.0" radius="46.0" stroke="#7dc4ff" strokeDashOffset="15.0" strokeType="INSIDE" strokeWidth="8.0" style="-fx-stroke-dash-array: 70;" />
    </children>
 </AnchorPane>

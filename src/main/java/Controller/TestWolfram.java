@@ -3,7 +3,6 @@ package Controller;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DecimalFormat;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class TestWolfram {
@@ -14,6 +13,10 @@ public class TestWolfram {
     private static final int MAX_THREADS = 10;
     private double unitPercentage;
     private int uniqueUnitAmount,amountOfGoldToRoll, championTier;
+    public static double lastCalculatedValueNormal;
+    public static double lastCalculatedValueSweat;
+
+
 
     /**
      *
@@ -57,6 +60,8 @@ public class TestWolfram {
                         int lastIndex = index+6;
                         System.out.println(df.format(managePercentageOutput(String.valueOf(strBuild),index,lastIndex)));
                         finalPercentage = ((managePercentageOutput(String.valueOf(strBuild),index,lastIndex)));
+                        lastCalculatedValueNormal = finalPercentage;
+
                         break;
                     }
                 }
@@ -112,6 +117,7 @@ public class TestWolfram {
                         int lastIndex = index+6;
                         System.out.println(df.format(managePercentageOutput(String.valueOf(strBuild),index,lastIndex)));
                         finalPercentage = ((managePercentageOutput(String.valueOf(strBuild),index,lastIndex)));
+                        lastCalculatedValueSweat = finalPercentage;
                         break;
                     }
                 }
@@ -132,8 +138,14 @@ public class TestWolfram {
      */
     public double managePercentageOutput(String originalString, int firstIndex, int lastIndex) {
         String percentageOutput = originalString.substring(firstIndex,lastIndex);
-        System.out.println( "PercentageOutput" +Double.parseDouble(percentageOutput));
+        //System.out.println( "PercentageOutput" +Double.parseDouble(percentageOutput));
         return Double.parseDouble(percentageOutput)*100;
+    }
+    public double getLastCalculatedValueNormal() {
+        return lastCalculatedValueNormal;
+    }
+    public double getLastCalculatedValueSweat() {
+        return lastCalculatedValueSweat;
     }
 
     /**

@@ -2,10 +2,11 @@ package Controller;
 
 public class ChampionTierStats {
 
-    private static int championCost = 0;
+    private static int championCost = 1;
 
 
     public static double[][] levels =  {
+            {0,0,0,0,0},
             {1,0,0,0,0},
             {1,0,0,0,0},
             {0.75,0.25,0,0,0},
@@ -27,11 +28,28 @@ public class ChampionTierStats {
         return championCost;
     }
 
-
-
     public static double[][] getChampionPercentage(){
         return levels;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public static int[] level1 = {100,0,0,0,0};
     public static int[] level2 = {100,0,0,0,0};
