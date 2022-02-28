@@ -243,6 +243,14 @@ public class Controller extends Thread implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        for (final XYChart.Series<?, ?> series : barChart.getData()) {
+            for (final XYChart.Data<?, ?> data : series.getData()) {
+                Tooltip tooltip = new Tooltip();
+                tooltip.setText(data.getXValue().toString() +" "+
+                        data.getYValue().toString());
+                Tooltip.install(data.getNode(), tooltip);
+            }
+        }
 
         loadingScreenRotation(firstCircle,true,360,20);
         loadingScreenRotation(secondCircle,true,180,13);

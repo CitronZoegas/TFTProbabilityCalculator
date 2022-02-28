@@ -81,7 +81,7 @@ public class TestWolfram {
      * @param userLevel
      * @return
      */
-    public double calculateWolframSweat(double[][] unitPercentagesArray, int uniqueUnitAmount, int amountOfGoldToRoll, int championTier, int userLevel) { // championTier is int 1-5
+    public double calculateWolframSweat(double[][] unitPercentagesArray, int uniqueUnitAmount, int amountOfGoldToRoll, int championTier, int userLevel) {
 
         //System.out.println( " % Array: "+ (Arrays.toString(unitPercentagesArray)) +" unique champs:"+ uniqueUnitAmount +" amount of gold: "+ amountOfGoldToRoll +" Championtier: "+ championTier);
         //                                                 LEVEL AND CHAMPIONTIER
