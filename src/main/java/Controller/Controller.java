@@ -119,13 +119,22 @@ public class Controller extends Thread implements Initializable {
      */
     @FXML
     public void calculateNormal() {
-
         createLoadingCircles();
         int userLevel = svf.getValue();
         double[][] percentagesOfHitting = (ChampionTierStats.getChampionPercentage());
         int uniqueUnitAmount = Integer.parseInt(numberOfCopies.getText());
         TestWolfram twf = new TestWolfram();
-        twf.calculateWolframNormal((percentagesOfHitting),uniqueUnitAmount,getHowMuchGold(),ChampionTierStats.getChampionCost(),userLevel);
+        Thread cont = new Thread(() -> {
+            twf.calculateWolframNormal((percentagesOfHitting),uniqueUnitAmount,getHowMuchGold(),ChampionTierStats.getChampionCost(),userLevel);
+            System.out.println("working");
+            loadingScreenRotation(firstCircle,true,360,6);
+            loadingScreenRotation(secondCircle,true,180,1);
+            loadingScreenRotation(thirdCircle,true,140,1);
+            loadingScreenRotation(fourthCircle,true,70,1);
+        });
+        cont.start();
+        //TestWolfram twf = new TestWolfram();
+        //twf.calculateWolframNormal((percentagesOfHitting),uniqueUnitAmount,getHowMuchGold(),ChampionTierStats.getChampionCost(),userLevel);
     }
 
     /**
@@ -217,12 +226,10 @@ public class Controller extends Thread implements Initializable {
             }
         });
         cont.start();
-
     }
 
     @FXML
     public void loadingScreenRotation(Circle circle, boolean bool, int angle, int duration){
-
         RotateTransition rotate = new RotateTransition(Duration.seconds(duration),circle);
         rotate.setAutoReverse(bool);
         rotate.setByAngle(angle);
@@ -238,8 +245,6 @@ public class Controller extends Thread implements Initializable {
         loadingScreenRotation(thirdCircle,true,140,26);
         loadingScreenRotation(fourthCircle,true,70,34);
     }
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

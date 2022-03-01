@@ -9,14 +9,12 @@ public class TestWolfram {
 
     private Controller controller;
     private static final DecimalFormat df = new DecimalFormat();
-    private static final String appid = "XXXX";
+    private static final String appid = "XXXXX";
     private static final int MAX_THREADS = 10;
     private double unitPercentage;
     private int uniqueUnitAmount,amountOfGoldToRoll, championTier;
     public static double lastCalculatedValueNormal;
     public static double lastCalculatedValueSweat;
-
-
 
     /**
      *
@@ -27,10 +25,8 @@ public class TestWolfram {
      * @param amountOfGoldToRoll
      */
 
-    public double calculateWolframNormal(double[][] unitPercentagesArray, int uniqueUnitAmount, int amountOfGoldToRoll, int championTier, int userLevel) { // championTier is int 1-5
+    public void calculateWolframNormal(double[][] unitPercentagesArray, int uniqueUnitAmount, int amountOfGoldToRoll, int championTier, int userLevel) {
 
-        //System.out.println( " % Array: "+ (Arrays.toString(unitPercentagesArray)) +" unique champs:"+ uniqueUnitAmount +" amount of gold: "+ amountOfGoldToRoll +" Championtier: "+ championTier);
-        //                                                 LEVEL AND CHAMPIONTIER
         double ChampionPercentage = unitPercentagesArray[userLevel][championTier];
         String expression2 = "(1+%E2%80%93(1+%E2%80%93("+ChampionPercentage+")%2F("+uniqueUnitAmount+"))%5E((5%2F2)*"+amountOfGoldToRoll+"))&plaintext&output=XML&appid="+appid;
         double finalPercentage = 0;
@@ -46,7 +42,6 @@ public class TestWolfram {
             }else{
                 StringBuilder strBuild = new StringBuilder();
                 Scanner sc = new Scanner(url.openStream());
-
                 while(sc.hasNext()){
                     strBuild.append(sc.nextLine());
                 }
@@ -69,7 +64,7 @@ public class TestWolfram {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return finalPercentage;
+
     }
 
     /**
