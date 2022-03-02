@@ -18,7 +18,7 @@ public class Main extends Application {
 
     public static Main instance;
     private Controller controller;
-
+    private TestWolfram testWolfram;
     @Override
     public void start(Stage stage) {
         try{

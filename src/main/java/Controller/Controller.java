@@ -1,6 +1,7 @@
 package Controller;
 
 import javafx.animation.RotateTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,7 +15,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Controller extends Thread implements Initializable {
-
+    //final CategoryAxis xAxis = new CategoryAxis();
+    //final NumberAxis yAxis = new NumberAxis();
     @FXML
     private AnchorPane groundLayer;
     @FXML
@@ -48,11 +50,11 @@ public class Controller extends Thread implements Initializable {
     final int initialValue = 1;
     SpinnerValueFactory<Integer> svf = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,11,initialValue);
     @FXML
-    private BarChart<?,?> barChart;
+    private BarChart<String,Number> barChart;
     @FXML
-    public static XYChart.Series series = new XYChart.Series();
-    public static XYChart.Series series1 = new XYChart.Series();
-    public static XYChart.Series series2 = new XYChart.Series();
+    public static   XYChart.Series  series = new XYChart.Series<>(),
+                                    series1 = new XYChart.Series<>(),
+                                    series2 = new XYChart.Series<>();
 
     private TestWolfram testWolfram;
 
@@ -108,7 +110,7 @@ public class Controller extends Thread implements Initializable {
     }
 
     private int getNumberOfCopiesLeft(){
-        if(validateIntegerInput(numberOfCopies.getText())){
+        if(validateIntegerInputString(numberOfCopies.getText())){
             return Integer.parseInt(numberOfCopies.getText());
         }
         return 0;
@@ -119,35 +121,58 @@ public class Controller extends Thread implements Initializable {
      */
     @FXML
     public void calculateNormal() {
-        createLoadingCircles();
-        int userLevel = svf.getValue();
-        double[][] percentagesOfHitting = (ChampionTierStats.getChampionPercentage());
-        int uniqueUnitAmount = Integer.parseInt(numberOfCopies.getText());
-        TestWolfram twf = new TestWolfram();
-        Thread cont = new Thread(() -> {
-            twf.calculateWolframNormal((percentagesOfHitting),uniqueUnitAmount,getHowMuchGold(),ChampionTierStats.getChampionCost(),userLevel);
-            System.out.println("working");
-            loadingScreenRotation(firstCircle,true,360,6);
-            loadingScreenRotation(secondCircle,true,180,1);
-            loadingScreenRotation(thirdCircle,true,140,1);
-            loadingScreenRotation(fourthCircle,true,70,1);
-        });
-        cont.start();
-        //TestWolfram twf = new TestWolfram();
-        //twf.calculateWolframNormal((percentagesOfHitting),uniqueUnitAmount,getHowMuchGold(),ChampionTierStats.getChampionCost(),userLevel);
+        try{
+            createLoadingCircles();
+            int userLevel = svf.getValue();
+            double[][] percentagesOfHitting = (ChampionTierStats.getChampionPercentage());
+            int uniqueUnitAmount = Integer.parseInt(numberOfCopies.getText());
+            TestWolfram twf = new TestWolfram();
+            Thread cont = new Thread(() -> {
+                twf.calculateWolframNormal((percentagesOfHitting),uniqueUnitAmount,getHowMuchGold(),ChampionTierStats.getChampionCost(),userLevel);
+                System.out.println("working");
+                loadingScreenRotation(firstCircle,true,360,6);
+                loadingScreenRotation(secondCircle,true,180,1);
+                loadingScreenRotation(thirdCircle,true,140,1);
+                loadingScreenRotation(fourthCircle,true,70,1);
+            });
+            cont.start();
+            clearCharts();
+            updateNormalCharts();
+        } catch (Exception e) {
+            System.out.println("You have not calculated anything yet.");
+            e.printStackTrace();
+        }
+
     }
 
     /**
      * This one have 2 more parameters
      * @return
      */
-    public double calculateSweat() {
-        createLoadingCircles();
-        int userLevel = svf.getValue();
-        double[][] percentagesOfHitting = (ChampionTierStats.getChampionPercentage());
-        int uniqueUnitAmount = Integer.parseInt(numberOfCopies.getText());
-        TestWolfram twf = new TestWolfram();
-        return twf.calculateWolframSweat((percentagesOfHitting),uniqueUnitAmount,getHowMuchGold(),ChampionTierStats.getChampionCost(),userLevel);
+    public void calculateSweat() {
+        try{
+            createLoadingCircles();
+            int userLevel = svf.getValue();
+            double[][] percentagesOfHitting = (ChampionTierStats.getChampionPercentage());
+            int uniqueUnitAmount = Integer.parseInt(numberOfCopies.getText());
+            TestWolfram twf = new TestWolfram();
+            //Platform.runLater(() -> twf.calculateWolframSweat((percentagesOfHitting),uniqueUnitAmount,getHowMuchGold(),ChampionTierStats.getChampionCost(),userLevel));
+            Thread cont = new Thread(() -> {
+                twf.calculateWolframSweat((percentagesOfHitting),uniqueUnitAmount,getHowMuchGold(),ChampionTierStats.getChampionCost(),userLevel);
+                System.out.println("working");
+                loadingScreenRotation(firstCircle,true,360,6);
+                loadingScreenRotation(secondCircle,true,180,1);
+                loadingScreenRotation(thirdCircle,true,140,1);
+                loadingScreenRotation(fourthCircle,true,70,1);
+            });
+
+            clearCharts();
+        } catch (Exception e) {
+            System.out.println("You have not calculated anything 'Sweat' related.");
+            e.printStackTrace();
+        }
+
+
     }
     private int getHowMuchGold() {
         return Integer.parseInt(amountOfGold.getText());
@@ -157,7 +182,7 @@ public class Controller extends Thread implements Initializable {
      * @param input
      * @return boolean
      */
-    public boolean validateIntegerInput(String input) {
+    public boolean validateIntegerInputString(String input) {
         try{
             int x = Integer.parseInt(input);
             return true;
@@ -167,15 +192,40 @@ public class Controller extends Thread implements Initializable {
         return false;
     }
 
-    public void updateCharts() {
+    public boolean validateDoubleInput(double input) {
+        try{
+            double x = 0.0;
+            if(input == x)
+            return true;
+        } catch (NumberFormatException e) {
+            System.out.println("That is not a valid number.");
+        }
+        return false;
+    }
+
+    /**
+     * Clear the example diagrams that the UI gets initialized with or potential residue from already active diagrams.
+     */
+    public void clearCharts() {
         series.getData().clear();
         series1.getData().clear();
         series2.getData().clear();
-        //createLoadingCircles();
-        System.out.println("updater works");
-        series.getData().add(new XYChart.Data("1 Champion",testWolfram.getLastCalculatedValueNormal()));
-        series1.getData().add(new XYChart.Data("2 Champions",testWolfram.getLastCalculatedValueSweat()));
+    }
+    public void updateNormalCharts() {
+        testWolfram = new TestWolfram();
+
+        if(testWolfram.getLastCalculatedValueNormal() > 0 || validateDoubleInput(testWolfram.getLastCalculatedValueNormal())){
+            series.getData().add(new XYChart.Data("1 Champion",testWolfram.getLastCalculatedValueNormal()));
+        }
+        if(testWolfram.getLastCalculatedValueSweat() > 0 || validateDoubleInput(testWolfram.getLastCalculatedValueSweat())){
+            series1.getData().add(new XYChart.Data("1 Champion",testWolfram.getLastCalculatedValueSweat()));
+        }
+
         System.out.println("yes");
+    }
+    public void updateSweatCharts() {
+        testWolfram = new TestWolfram();
+        series1.getData().add(new XYChart.Data("1Champion", testWolfram.getLastCalculatedValueSweat()));
     }
 
     @FXML
@@ -245,17 +295,13 @@ public class Controller extends Thread implements Initializable {
         loadingScreenRotation(thirdCircle,true,140,26);
         loadingScreenRotation(fourthCircle,true,70,34);
     }
+    public void initilizeToolTipForBarChart() {
+        Tooltip diagramToolTip = new Tooltip();
+
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        for (final XYChart.Series<?, ?> series : barChart.getData()) {
-            for (final XYChart.Data<?, ?> data : series.getData()) {
-                Tooltip tooltip = new Tooltip();
-                tooltip.setText(data.getXValue().toString() +" "+
-                        data.getYValue().toString());
-                Tooltip.install(data.getNode(), tooltip);
-            }
-        }
 
         loadingScreenRotation(firstCircle,true,360,20);
         loadingScreenRotation(secondCircle,true,180,13);
@@ -265,13 +311,16 @@ public class Controller extends Thread implements Initializable {
         levelSpinner.setValueFactory(svf);
         testWolfram = new TestWolfram();
 
-        series.setName("1 example");
-        series1.setName("2 example");
-        series2.setName("3 example");
+        series.setName("1 Champion");
+        series1.setName("2 Champion");
+        series2.setName("3 Champion");
 
-        series.getData().add(new XYChart.Data("X Cost",90));
-        series1.getData().add(new XYChart.Data("Y Cost",40));
-        series2.getData().add(new XYChart.Data("Z Cost",9));
+        series.getData().add(new XYChart.Data("X Champion",90));
+        XYChart.Data bestBar = (XYChart.Data)series.getData().get(0);
+        Tooltip.install(bestBar.getNode(),new Tooltip("LOL"));
+        series1.getData().add(new XYChart.Data("Y Champion",40));
+        series2.getData().add(new XYChart.Data("Z Champion",9));
+
         barChart.getData().addAll(series);
         barChart.getData().addAll(series1);
         barChart.getData().addAll(series2);
