@@ -30,9 +30,9 @@
  - 
 
 
-Picture of how the application is looking at the moment
+Picture of how the application is looking at the moment (44dd1d1)
 ![bild](https://user-images.githubusercontent.com/81166713/156577474-8f72036c-2e2e-49da-9876-20a4ccc6763a.png)
 
 
-A preview of one of the small features, The champion pool diagram
+A preview of one of the small features, The champion pool diagram (44dd1d1)
 ![bild](https://user-images.githubusercontent.com/81166713/156577728-dc658ab7-5022-405b-bd11-c462e9b77786.png)
