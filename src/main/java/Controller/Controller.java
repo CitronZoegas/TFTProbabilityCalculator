@@ -6,10 +6,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.util.Duration;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -54,7 +57,17 @@ public class Controller extends Thread implements Initializable {
     @FXML
     public static   XYChart.Series  series = new XYChart.Series<>(),
                                     series1 = new XYChart.Series<>(),
-                                    series2 = new XYChart.Series<>();
+                                    series2 = new XYChart.Series<>(),
+                                    series3 = new XYChart.Series<>(),
+                                    series4 = new XYChart.Series<>();
+
+    @FXML
+    public static XYChart.Series    championTierDiagram1 = new XYChart.Series<>(),
+                                    championTierDiagram2 = new XYChart.Series<>(),
+                                    championTierDiagram3 = new XYChart.Series<>(),
+                                    championTierDiagram4 = new XYChart.Series<>(),
+                                    championTierDiagram5 = new XYChart.Series<>();
+
 
     private TestWolfram testWolfram;
 
@@ -137,7 +150,6 @@ public class Controller extends Thread implements Initializable {
             });
             cont.start();
             clearCharts();
-            updateNormalCharts();
         } catch (Exception e) {
             System.out.println("You have not calculated anything yet.");
             e.printStackTrace();
@@ -212,6 +224,19 @@ public class Controller extends Thread implements Initializable {
         series2.getData().clear();
     }
     public void updateNormalCharts() {
+
+        series.getData().clear();
+        series1.getData().clear();
+        series2.getData().clear();
+        series3.getData().clear();
+        series4.getData().clear();
+
+        championTierDiagram1.getData().clear();
+        championTierDiagram2.getData().clear();
+        championTierDiagram3.getData().clear();
+        championTierDiagram4.getData().clear();
+        championTierDiagram5.getData().clear();
+
         testWolfram = new TestWolfram();
 
         if(testWolfram.getLastCalculatedValueNormal() > 0 || validateDoubleInput(testWolfram.getLastCalculatedValueNormal())){
@@ -224,6 +249,10 @@ public class Controller extends Thread implements Initializable {
         System.out.println("yes");
     }
     public void updateSweatCharts() {
+
+
+
+
         testWolfram = new TestWolfram();
         series1.getData().add(new XYChart.Data("1Champion", testWolfram.getLastCalculatedValueSweat()));
     }
@@ -300,6 +329,38 @@ public class Controller extends Thread implements Initializable {
 
     }
 
+    public void championPoolDiagram(){
+
+
+        series.getData().clear();
+        series1.getData().clear();
+        series2.getData().clear();
+        series3.getData().clear();
+        series4.getData().clear();
+
+        championTierDiagram1.getData().clear();
+        championTierDiagram2.getData().clear();
+        championTierDiagram3.getData().clear();
+        championTierDiagram4.getData().clear();
+        championTierDiagram5.getData().clear();
+
+        championTierDiagram1.setName("1 Tier");
+        championTierDiagram2.setName("2 Tier");
+        championTierDiagram3.setName("3 Tier");
+        championTierDiagram4.setName("4 Tier");
+        championTierDiagram5.setName("5 Tier");
+
+        championTierDiagram1.getData().add(new XYChart.Data("1 Tier",29));
+        championTierDiagram2.getData().add(new XYChart.Data("2 Tier",22));
+        championTierDiagram3.getData().add(new XYChart.Data("3 Tier",18));
+        championTierDiagram4.getData().add(new XYChart.Data("4 Tier",12));
+        championTierDiagram5.getData().add(new XYChart.Data("5 Tier",10));
+
+        //barChart.getData().addAll(series);
+        //barChart.getData().addAll(series1);
+        barChart.getData().addAll(championTierDiagram1,championTierDiagram2,championTierDiagram3,championTierDiagram4,championTierDiagram5);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -314,15 +375,26 @@ public class Controller extends Thread implements Initializable {
         series.setName("1 Champion");
         series1.setName("2 Champion");
         series2.setName("3 Champion");
+        series3.setName("4 Champion");
+        series4.setName("4 Champion");
 
         series.getData().add(new XYChart.Data("X Champion",90));
-        XYChart.Data bestBar = (XYChart.Data)series.getData().get(0);
-        Tooltip.install(bestBar.getNode(),new Tooltip("LOL"));
         series1.getData().add(new XYChart.Data("Y Champion",40));
         series2.getData().add(new XYChart.Data("Z Champion",9));
+        series3.getData().add(new XYChart.Data("S Champion",25));
+        series4.getData().add(new XYChart.Data("D Champion",68));
 
         barChart.getData().addAll(series);
         barChart.getData().addAll(series1);
         barChart.getData().addAll(series2);
+        barChart.getData().addAll(series3);
+        barChart.getData().addAll(series4);
+
+
+    }
+
+    public void exitApplication() {
+        Platform.exit();
+        System.exit(0);
     }
 }

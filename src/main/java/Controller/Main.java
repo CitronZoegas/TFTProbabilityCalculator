@@ -11,8 +11,12 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
 import java.io.IOException;
+import java.util.Objects;
 
 public class Main extends Application {
 
@@ -25,10 +29,12 @@ public class Main extends Application {
             controller = new Controller();
             initializeConnection();
             FXMLLoader fxmlloader = new FXMLLoader(Main.class.getResource("/FXML/clientPage.fxml"));
-            Controller controller = fxmlloader.getController();
+
             Parent root = fxmlloader.load();
             Scene scene = new Scene(root);
+            scene.getStylesheets().add(String.valueOf((Objects.requireNonNull(getClass().getResource("/CSS/stylesheet.css")).toExternalForm())));
             stage.setTitle("TFT Probability Calculator");
+            stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

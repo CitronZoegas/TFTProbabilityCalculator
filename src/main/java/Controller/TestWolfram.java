@@ -11,7 +11,7 @@ public class TestWolfram {
 
     private Controller controller;
     private static final DecimalFormat df = new DecimalFormat();
-    private static final String appid = "XXXX";
+    private static final String appid = "XXXXX";
     private static final int MAX_THREADS = 10;
     private double unitPercentage;
     private int uniqueUnitAmount,amountOfGoldToRoll, championTier;
@@ -81,6 +81,7 @@ public class TestWolfram {
      * @return
      */
     public void calculateWolframSweat(double[][] unitPercentagesArray, int uniqueUnitAmount, int amountOfGoldToRoll, int championTier, int userLevel) {
+
         controller = new Controller();
         double ChampionPercentage = unitPercentagesArray[userLevel][championTier];
         String expression2 = "(1+%E2%80%93(1+%E2%80%93("+ChampionPercentage+")%2F("+uniqueUnitAmount+"))%5E((5%2F2)*"+amountOfGoldToRoll+"))&plaintext&output=XML&appid="+appid;
