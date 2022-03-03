@@ -4,7 +4,6 @@ public class ChampionTierStats {
 
     private static int championCost = 1;
 
-
     public static double[][] levels =  {
             {0,0,0,0,0},
             {1,0,0,0,0},

@@ -40,10 +40,11 @@
             <Label layoutX="97.0" layoutY="194.0" prefHeight="17.0" prefWidth="162.0" text="COST CHAMPIONS GONE:" />
             <Label layoutX="7.0" layoutY="211.0" prefHeight="17.0" prefWidth="238.0" text="(on other peoples boards and benches)" />
             <Label layoutX="4.0" layoutY="68.0" prefHeight="37.0" prefWidth="251.0" text="HOW MUCH GOLD WILL YOU ROLL:" />
-            <Label layoutX="4.0" layoutY="358.0" prefHeight="17.0" prefWidth="251.0" text="SWEAT SETTINGS:" />
+            <Label layoutX="4.0" layoutY="363.0" prefHeight="17.0" prefWidth="251.0" text="SWEAT SETTINGS:" />
             <Label layoutX="4.0" layoutY="451.0" prefHeight="37.0" prefWidth="251.0" text="HOW MUCH GOLD TO LEVEL:" />
             <Label layoutX="9.0" layoutY="140.0" prefHeight="17.0" prefWidth="251.0" text="WHAT IS YOUR LEVEL:" />
             <Label layoutX="4.0" layoutY="381.0" prefHeight="25.0" prefWidth="244.0" text="HOW MANY CHAMPIONS DO YOU WANT" />
+            <Button layoutX="4.0" layoutY="322.0" mnemonicParsing="false" onAction="#calculateNormalTimesTwo" prefHeight="37.0" prefWidth="251.0" text="Calculate x2 " />
          </children>
       </AnchorPane>
       <BarChart fx:id="barChart" cache="true" layoutX="286.0" layoutY="148.0" prefHeight="486.0" prefWidth="635.0">
@@ -51,7 +52,7 @@
           <CategoryAxis label="Amount of Champions" side="BOTTOM" />
         </xAxis>
         <yAxis>
-          <NumberAxis label="\% Chance to get X champion" prefHeight="424.0" prefWidth="75.0" side="LEFT" style="-fx-tick-label-font-size: 15;" />
+          <NumberAxis fx:id="leftLabelOfBarChart" label="\% Chance to get X champion" prefHeight="424.0" prefWidth="75.0" side="LEFT" style="-fx-tick-label-font-size: 15;" />
         </yAxis>
       </BarChart>
       <TextField layoutX="649.0" layoutY="643.0" prefHeight="80.0" prefWidth="276.0" text="Notes:" />

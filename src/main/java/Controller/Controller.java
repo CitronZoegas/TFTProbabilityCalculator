@@ -6,13 +6,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
-import javafx.scene.chart.PieChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import javafx.util.Duration;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -24,7 +22,6 @@ public class Controller extends Thread implements Initializable {
     private AnchorPane groundLayer;
     @FXML
     private TextField amountOfGold;
-
     @FXML
     private RadioButton champTier1;
     @FXML
@@ -35,10 +32,8 @@ public class Controller extends Thread implements Initializable {
     private RadioButton champTier4;
     @FXML
     private RadioButton champTier5;
-
     @FXML
     private TextField numberOfCopies;
-
     @FXML
     private Circle firstCircle;
     @FXML
@@ -55,11 +50,13 @@ public class Controller extends Thread implements Initializable {
     @FXML
     private BarChart<String,Number> barChart;
     @FXML
-    public static   XYChart.Series  series = new XYChart.Series<>(),
-                                    series1 = new XYChart.Series<>(),
+    private NumberAxis leftLabelOfBarChart;
+    @FXML
+    public static   XYChart.Series  series1 = new XYChart.Series<>(),
                                     series2 = new XYChart.Series<>(),
                                     series3 = new XYChart.Series<>(),
-                                    series4 = new XYChart.Series<>();
+                                    series4 = new XYChart.Series<>(),
+                                    series5 = new XYChart.Series<>();
 
     @FXML
     public static XYChart.Series    championTierDiagram1 = new XYChart.Series<>(),
@@ -68,14 +65,14 @@ public class Controller extends Thread implements Initializable {
                                     championTierDiagram4 = new XYChart.Series<>(),
                                     championTierDiagram5 = new XYChart.Series<>();
 
-
     private TestWolfram testWolfram;
 
 
     @FXML
     public void getChampionTier1(ActionEvent event){
+
         ChampionTierStats.setChampionCost(0);
-        System.out.println(ChampionTierStats.getChampionCost());
+
         champTier2.setSelected(false);
         champTier3.setSelected(false);
         champTier4.setSelected(false);
@@ -84,8 +81,9 @@ public class Controller extends Thread implements Initializable {
 
     @FXML
     public void getChampionTier2(ActionEvent event){
+
         ChampionTierStats.setChampionCost(1);
-        System.out.println(ChampionTierStats.getChampionCost());
+
         champTier1.setSelected(false);
         champTier3.setSelected(false);
         champTier4.setSelected(false);
@@ -94,8 +92,9 @@ public class Controller extends Thread implements Initializable {
 
     @FXML
     public void getChampionTier3(ActionEvent event){
+
         ChampionTierStats.setChampionCost(2);
-        System.out.println(ChampionTierStats.getChampionCost());
+
         champTier1.setSelected(false);
         champTier2.setSelected(false);
         champTier4.setSelected(false);
@@ -104,8 +103,9 @@ public class Controller extends Thread implements Initializable {
 
     @FXML
     public void getChampionTier4(ActionEvent event){
+
         ChampionTierStats.setChampionCost(3);
-        System.out.println(ChampionTierStats.getChampionCost());
+
         champTier1.setSelected(false);
         champTier2.setSelected(false);
         champTier3.setSelected(false);
@@ -114,8 +114,9 @@ public class Controller extends Thread implements Initializable {
 
     @FXML
     public void getChampionTier5(ActionEvent event){
+
         ChampionTierStats.setChampionCost(4);
-        System.out.println(ChampionTierStats.getChampionCost());
+
         champTier1.setSelected(false);
         champTier2.setSelected(false);
         champTier3.setSelected(false);
@@ -134,21 +135,25 @@ public class Controller extends Thread implements Initializable {
      */
     @FXML
     public void calculateNormal() {
+        setBarChartLabelx1();
         try{
             createLoadingCircles();
             int userLevel = svf.getValue();
             double[][] percentagesOfHitting = (ChampionTierStats.getChampionPercentage());
             int uniqueUnitAmount = Integer.parseInt(numberOfCopies.getText());
+
             TestWolfram twf = new TestWolfram();
-            Thread cont = new Thread(() -> {
+            Thread calculateThread = new Thread(() -> {
+
                 twf.calculateWolframNormal((percentagesOfHitting),uniqueUnitAmount,getHowMuchGold(),ChampionTierStats.getChampionCost(),userLevel);
-                System.out.println("working");
+
                 loadingScreenRotation(firstCircle,true,360,6);
                 loadingScreenRotation(secondCircle,true,180,1);
                 loadingScreenRotation(thirdCircle,true,140,1);
                 loadingScreenRotation(fourthCircle,true,70,1);
+
             });
-            cont.start();
+            calculateThread.start();
             clearCharts();
         } catch (Exception e) {
             System.out.println("You have not calculated anything yet.");
@@ -162,16 +167,19 @@ public class Controller extends Thread implements Initializable {
      * @return
      */
     public void calculateSweat() {
+        setBarChartLabelx1();
         try{
             createLoadingCircles();
             int userLevel = svf.getValue();
             double[][] percentagesOfHitting = (ChampionTierStats.getChampionPercentage());
             int uniqueUnitAmount = Integer.parseInt(numberOfCopies.getText());
+
             TestWolfram twf = new TestWolfram();
             //Platform.runLater(() -> twf.calculateWolframSweat((percentagesOfHitting),uniqueUnitAmount,getHowMuchGold(),ChampionTierStats.getChampionCost(),userLevel));
-            Thread cont = new Thread(() -> {
+            Thread calculateThread = new Thread(() -> {
+
                 twf.calculateWolframSweat((percentagesOfHitting),uniqueUnitAmount,getHowMuchGold(),ChampionTierStats.getChampionCost(),userLevel);
-                System.out.println("working");
+
                 loadingScreenRotation(firstCircle,true,360,6);
                 loadingScreenRotation(secondCircle,true,180,1);
                 loadingScreenRotation(thirdCircle,true,140,1);
@@ -183,7 +191,33 @@ public class Controller extends Thread implements Initializable {
             System.out.println("You have not calculated anything 'Sweat' related.");
             e.printStackTrace();
         }
+    }
 
+    @FXML
+    public void calculateNormalTimesTwo() {
+        setBarChartLabelx2();
+        try{
+            createLoadingCircles();
+            int userLevel = svf.getValue();
+            double[][] percentagesOfHitting = (ChampionTierStats.getChampionPercentage());
+            int uniqueUnitAmount = Integer.parseInt(numberOfCopies.getText());
+
+            TestWolfram twf = new TestWolfram();
+            Thread calculateThread = new Thread(() -> {
+                twf.calculateTwoUnits((percentagesOfHitting),uniqueUnitAmount,getHowMuchGold(),ChampionTierStats.getChampionCost(),userLevel);
+
+                loadingScreenRotation(firstCircle,true,360,6);
+                loadingScreenRotation(secondCircle,true,180,1);
+                loadingScreenRotation(thirdCircle,true,140,1);
+                loadingScreenRotation(fourthCircle,true,70,1);
+
+            });
+            calculateThread.start();
+            clearCharts();
+        } catch (Exception e) {
+            System.out.println("You have not calculated anything yet.");
+            e.printStackTrace();
+        }
 
     }
     private int getHowMuchGold() {
@@ -205,31 +239,52 @@ public class Controller extends Thread implements Initializable {
     }
 
     public boolean validateDoubleInput(double input) {
+
         try{
             double x = 0.0;
             if(input == x)
             return true;
+
         } catch (NumberFormatException e) {
             System.out.println("That is not a valid number.");
         }
         return false;
+    }
+    public void setBarChartLabelx1() {
+
+        if(champTier1.isSelected()) leftLabelOfBarChart.setLabel("% Chance to get 1, "+champTier1.getText()+" Tier Champion");
+        if(champTier2.isSelected()) leftLabelOfBarChart.setLabel("% Chance to get 1, "+champTier2.getText()+" Tier Champion");
+        if(champTier3.isSelected()) leftLabelOfBarChart.setLabel("% Chance to get 1, "+champTier3.getText()+" Tier Champion");
+        if(champTier4.isSelected()) leftLabelOfBarChart.setLabel("% Chance to get 1, "+champTier4.getText()+" Tier Champion");
+        if(champTier5.isSelected()) leftLabelOfBarChart.setLabel("% Chance to get 1, "+champTier5.getText()+" Tier Champion");
+    }
+
+    public void setBarChartLabelx2() {
+
+        if(champTier1.isSelected()) leftLabelOfBarChart.setLabel("% Chance to get 2, "+champTier1.getText()+" Tier Champion");
+        if(champTier2.isSelected()) leftLabelOfBarChart.setLabel("% Chance to get 2, "+champTier2.getText()+" Tier Champion");
+        if(champTier3.isSelected()) leftLabelOfBarChart.setLabel("% Chance to get 2, "+champTier3.getText()+" Tier Champion");
+        if(champTier4.isSelected()) leftLabelOfBarChart.setLabel("% Chance to get 2, "+champTier4.getText()+" Tier Champion");
+        if(champTier5.isSelected()) leftLabelOfBarChart.setLabel("% Chance to get 2, "+champTier5.getText()+" Tier Champion");
     }
 
     /**
      * Clear the example diagrams that the UI gets initialized with or potential residue from already active diagrams.
      */
     public void clearCharts() {
-        series.getData().clear();
+
         series1.getData().clear();
         series2.getData().clear();
+        series3.getData().clear();
     }
+
     public void updateNormalCharts() {
 
-        series.getData().clear();
         series1.getData().clear();
         series2.getData().clear();
         series3.getData().clear();
         series4.getData().clear();
+        series5.getData().clear();
 
         championTierDiagram1.getData().clear();
         championTierDiagram2.getData().clear();
@@ -240,27 +295,26 @@ public class Controller extends Thread implements Initializable {
         testWolfram = new TestWolfram();
 
         if(testWolfram.getLastCalculatedValueNormal() > 0 || validateDoubleInput(testWolfram.getLastCalculatedValueNormal())){
-            series.getData().add(new XYChart.Data("1 Champion",testWolfram.getLastCalculatedValueNormal()));
+            series1.getData().add(new XYChart.Data("1 Champion",testWolfram.getLastCalculatedValueNormal()));
         }
         if(testWolfram.getLastCalculatedValueSweat() > 0 || validateDoubleInput(testWolfram.getLastCalculatedValueSweat())){
-            series1.getData().add(new XYChart.Data("1 Champion",testWolfram.getLastCalculatedValueSweat()));
+            series2.getData().add(new XYChart.Data("1 Champion",testWolfram.getLastCalculatedValueSweat()));
         }
 
         System.out.println("yes");
     }
     public void updateSweatCharts() {
 
-
-
-
         testWolfram = new TestWolfram();
-        series1.getData().add(new XYChart.Data("1Champion", testWolfram.getLastCalculatedValueSweat()));
+        series2.getData().add(new XYChart.Data("1Champion", testWolfram.getLastCalculatedValueSweat()));
+
     }
 
     @FXML
     public void createLoadingCircles() {
 
         //possibly useful later on
+
         /*Scene scene = Main.getScene();
         Stage stage = (Stage) levelSpinner.getScene().getWindow();
 
@@ -297,11 +351,13 @@ public class Controller extends Thread implements Initializable {
         Thread cont = new Thread(new Runnable() {
             @Override
             public void run() {
+
                 System.out.println("working");
                 loadingScreenRotation(firstCircle,true,360,6);
                 loadingScreenRotation(secondCircle,true,180,1);
                 loadingScreenRotation(thirdCircle,true,140,1);
                 loadingScreenRotation(fourthCircle,true,70,1);
+
             }
         });
         cont.start();
@@ -309,6 +365,7 @@ public class Controller extends Thread implements Initializable {
 
     @FXML
     public void loadingScreenRotation(Circle circle, boolean bool, int angle, int duration){
+
         RotateTransition rotate = new RotateTransition(Duration.seconds(duration),circle);
         rotate.setAutoReverse(bool);
         rotate.setByAngle(angle);
@@ -319,6 +376,7 @@ public class Controller extends Thread implements Initializable {
     }
 
     public void cancelLoadingScreen(Circle circle ) {
+
         loadingScreenRotation(firstCircle,true,360,30);
         loadingScreenRotation(secondCircle,true,180,18);
         loadingScreenRotation(thirdCircle,true,140,26);
@@ -331,12 +389,11 @@ public class Controller extends Thread implements Initializable {
 
     public void championPoolDiagram(){
 
-
-        series.getData().clear();
         series1.getData().clear();
         series2.getData().clear();
         series3.getData().clear();
         series4.getData().clear();
+        series5.getData().clear();
 
         championTierDiagram1.getData().clear();
         championTierDiagram2.getData().clear();
@@ -364,6 +421,8 @@ public class Controller extends Thread implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        leftLabelOfBarChart.setLabel("% Chance to get X, Y Tier Champion");
+
         loadingScreenRotation(firstCircle,true,360,20);
         loadingScreenRotation(secondCircle,true,180,13);
         loadingScreenRotation(thirdCircle,true,140,8);
@@ -372,24 +431,23 @@ public class Controller extends Thread implements Initializable {
         levelSpinner.setValueFactory(svf);
         testWolfram = new TestWolfram();
 
-        series.setName("1 Champion");
-        series1.setName("2 Champion");
-        series2.setName("3 Champion");
-        series3.setName("4 Champion");
+        series1.setName("1 Champion");
+        series2.setName("2 Champion");
+        series3.setName("3 Champion");
         series4.setName("4 Champion");
+        series5.setName("5 Champion");
 
-        series.getData().add(new XYChart.Data("X Champion",90));
-        series1.getData().add(new XYChart.Data("Y Champion",40));
-        series2.getData().add(new XYChart.Data("Z Champion",9));
-        series3.getData().add(new XYChart.Data("S Champion",25));
-        series4.getData().add(new XYChart.Data("D Champion",68));
+        series1.getData().add(new XYChart.Data("X Champion",90));
+        series2.getData().add(new XYChart.Data("Y Champion",40));
+        series3.getData().add(new XYChart.Data("Z Champion",9));
+        series4.getData().add(new XYChart.Data("S Champion",25));
+        series5.getData().add(new XYChart.Data("D Champion",68));
 
-        barChart.getData().addAll(series);
         barChart.getData().addAll(series1);
         barChart.getData().addAll(series2);
         barChart.getData().addAll(series3);
         barChart.getData().addAll(series4);
-
+        barChart.getData().addAll(series5);
 
     }
 

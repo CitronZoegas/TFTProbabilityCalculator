@@ -31,12 +31,15 @@ public class Main extends Application {
             FXMLLoader fxmlloader = new FXMLLoader(Main.class.getResource("/FXML/clientPage.fxml"));
 
             Parent root = fxmlloader.load();
+
             Scene scene = new Scene(root);
             scene.getStylesheets().add(String.valueOf((Objects.requireNonNull(getClass().getResource("/CSS/stylesheet.css")).toExternalForm())));
+
             stage.setTitle("TFT Probability Calculator");
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(scene);
             stage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -45,6 +48,7 @@ public class Main extends Application {
     private void initializeConnection(){
         instance = this;
     }
+
     public static Scene getScene() {
         Scene scene = null ;
         try {
@@ -54,7 +58,6 @@ public class Main extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return scene;
     }
 

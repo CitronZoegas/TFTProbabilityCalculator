@@ -10,14 +10,13 @@ import java.util.Scanner;
 public class TestWolfram {
 
     private Controller controller;
+
     private static final DecimalFormat df = new DecimalFormat();
     private static final String appid = "XXXXX";
     private static final int MAX_THREADS = 10;
-    private double unitPercentage;
-    private int uniqueUnitAmount,amountOfGoldToRoll, championTier;
+
     public static double lastCalculatedValueNormal;
     public static double lastCalculatedValueSweat;
-
 
     /**
      * The logic behind the calculations can you find here: https://en.wikipedia.org/wiki/Binomial_distribution
@@ -31,14 +30,15 @@ public class TestWolfram {
 
         double ChampionPercentage = unitPercentagesArray[userLevel][championTier];
         String expression2 = "(1+%E2%80%93(1+%E2%80%93("+ChampionPercentage+")%2F("+uniqueUnitAmount+"))%5E((5%2F2)*"+amountOfGoldToRoll+"))&plaintext&output=XML&appid="+appid;
+
         try{
+
             URL url = new URL("https://api.wolframalpha.com/v2/query?input="+expression2);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
             conn.setRequestMethod("GET");
             conn.connect();
-
             int responeNumber = conn.getResponseCode();
+
             if(responeNumber != 200){
                 throw new RuntimeException("HttpResponeCode: " + responeNumber);
             }else{
@@ -55,9 +55,9 @@ public class TestWolfram {
                 for(int i = 0; i<strBuild.length(); i++){
                     boolean isFound = strBuild.indexOf("plaintext") != -1;
                     if(isFound){
+
                         int index = ordinalIndexOf(String.valueOf(strBuild),"plaintext", 3);
                         int lastIndex = index+6;
-                        //System.out.println(df.format(managePercentageOutput(String.valueOf(strBuild),index,lastIndex)));
                         lastCalculatedValueNormal = ((managePercentageOutput(String.valueOf(strBuild),index,lastIndex)));
                         break;
                     }
@@ -68,7 +68,6 @@ public class TestWolfram {
         }
         Tooltip tooltip = new Tooltip();
         tooltip.setText("Done");
-
     }
 
     /**
@@ -92,15 +91,14 @@ public class TestWolfram {
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.connect();
-            System.out.println("connected");
 
             int responeNumber = conn.getResponseCode();
 
             if(responeNumber != 200){
                 throw new RuntimeException("HttpResponeCode: " + responeNumber);
 
-            }
-            else {
+            } else {
+
                 StringBuilder strBuild = new StringBuilder();
                 Scanner sc = new Scanner(url.openStream());
 
@@ -114,9 +112,10 @@ public class TestWolfram {
                 for(int i = 0; i<strBuild.length(); i++){
                     boolean isFound = strBuild.indexOf("plaintext") != -1;
                     if(isFound){
+
                         int index = ordinalIndexOf(String.valueOf(strBuild),"plaintext", 3);
                         int lastIndex = index+6;
-                        System.out.println(df.format(managePercentageOutput(String.valueOf(strBuild),index,lastIndex)));
+
                         lastCalculatedValueSweat = ((managePercentageOutput(String.valueOf(strBuild),index,lastIndex)));
                         break;
                     }
@@ -126,38 +125,35 @@ public class TestWolfram {
         catch (Exception e) {
             e.printStackTrace();
         }
-        controller.updateNormalCharts();
 
     }
 
     /**
      * This method will calculate the odds of getting 2 units of the same cost
-      * @param unitPercentagesArray
+     * @param unitPercentagesArray
      * @param uniqueUnitAmount
      * @param amountOfGoldToRoll
      * @param championTier
      * @param userLevel
      */
     public void calculateTwoUnits(double[][] unitPercentagesArray, int uniqueUnitAmount, int amountOfGoldToRoll, int championTier, int userLevel) {
+
         controller = new Controller();
         double ChampionPercentage = unitPercentagesArray[userLevel][championTier];
-        String expression2 = "(1+%E2%80%93(1+%E2%80%93("+ChampionPercentage+")%2F("+uniqueUnitAmount+"))%5E((5%2F2)*"+amountOfGoldToRoll+"))&plaintext&output=XML&appid="+appid;
-
+        String expression2 = "1+-+(1+-+((1%2F6)("+ChampionPercentage+")))%5E210+%E2%80%93+((5/2)*"+amountOfGoldToRoll+")((1%2F6)("+ChampionPercentage+"))(1-(1%2F6)("+ChampionPercentage+"))%5E209+-+(1+-+(1+-+((1%2F6)(.15)))%5E70+%E2%80%93+(70)((1%2F6)(.15))(1-(1%2F6)(.15))%5E69)&format=image,plaintext&output=XML&appid="+appid;
         try{
 
             URL url = new URL("https://api.wolframalpha.com/v2/query?input="+expression2);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.connect();
-            System.out.println("connected");
 
             int responeNumber = conn.getResponseCode();
 
             if(responeNumber != 200){
                 throw new RuntimeException("HttpResponeCode: " + responeNumber);
+            } else {
 
-            }
-            else {
                 StringBuilder strBuild = new StringBuilder();
                 Scanner sc = new Scanner(url.openStream());
 
@@ -167,13 +163,11 @@ public class TestWolfram {
 
                 sc.close();
 
-                //System.out.println(strBuild); //This is to print everything grabbed by the API request
                 for(int i = 0; i<strBuild.length(); i++){
                     boolean isFound = strBuild.indexOf("plaintext") != -1;
                     if(isFound){
                         int index = ordinalIndexOf(String.valueOf(strBuild),"plaintext", 3);
                         int lastIndex = index+6;
-                        System.out.println(df.format(managePercentageOutput(String.valueOf(strBuild),index,lastIndex)));
                         lastCalculatedValueSweat = ((managePercentageOutput(String.valueOf(strBuild),index,lastIndex)));
                         break;
                     }
@@ -183,7 +177,7 @@ public class TestWolfram {
         catch (Exception e) {
             e.printStackTrace();
         }
-        controller.updateNormalCharts();
+
     }
 
     /**
@@ -197,8 +191,8 @@ public class TestWolfram {
     public double managePercentageOutput(String originalString, int firstIndex, int lastIndex) {
 
         String percentageOutput = originalString.substring(firstIndex,lastIndex);
-        //System.out.println( "PercentageOutput" +Double.parseDouble(percentageOutput));
         return Double.parseDouble(percentageOutput)*100;
+
     }
 
     public double getLastCalculatedValueNormal() {
