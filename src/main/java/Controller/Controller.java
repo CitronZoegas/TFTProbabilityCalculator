@@ -185,7 +185,7 @@ public class Controller extends Thread implements Initializable {
                 loadingScreenRotation(thirdCircle,true,140,1);
                 loadingScreenRotation(fourthCircle,true,70,1);
             });
-
+            calculateThread.start();
             clearCharts();
         } catch (Exception e) {
             System.out.println("You have not calculated anything 'Sweat' related.");
@@ -220,6 +220,7 @@ public class Controller extends Thread implements Initializable {
         }
 
     }
+
     private int getHowMuchGold() {
         return Integer.parseInt(amountOfGold.getText());
     }
@@ -297,11 +298,15 @@ public class Controller extends Thread implements Initializable {
         if(testWolfram.getLastCalculatedValueNormal() > 0 || validateDoubleInput(testWolfram.getLastCalculatedValueNormal())){
             series1.getData().add(new XYChart.Data("1 Champion",testWolfram.getLastCalculatedValueNormal()));
         }
-        if(testWolfram.getLastCalculatedValueSweat() > 0 || validateDoubleInput(testWolfram.getLastCalculatedValueSweat())){
+
+        if (testWolfram.getLastCalculatedValueSweat() > 0 || validateDoubleInput(testWolfram.getLastCalculatedValueSweat())){
             series2.getData().add(new XYChart.Data("1 Champion",testWolfram.getLastCalculatedValueSweat()));
         }
+        if(testWolfram.getlastCalculatedValueTwoUnits() > 0 || validateDoubleInput(testWolfram.getlastCalculatedValueTwoUnits())){
+            series3.getData().add(new XYChart.Data("2 Champions",testWolfram.getlastCalculatedValueTwoUnits()));
+        }
 
-        System.out.println("yes");
+
     }
     public void updateSweatCharts() {
 
@@ -431,11 +436,11 @@ public class Controller extends Thread implements Initializable {
         levelSpinner.setValueFactory(svf);
         testWolfram = new TestWolfram();
 
-        series1.setName("1 Champion");
+        /*series1.setName("1 Champion");
         series2.setName("2 Champion");
         series3.setName("3 Champion");
         series4.setName("4 Champion");
-        series5.setName("5 Champion");
+        series5.setName("5 Champion");*/
 
         series1.getData().add(new XYChart.Data("X Champion",90));
         series2.getData().add(new XYChart.Data("Y Champion",40));
@@ -448,6 +453,7 @@ public class Controller extends Thread implements Initializable {
         barChart.getData().addAll(series3);
         barChart.getData().addAll(series4);
         barChart.getData().addAll(series5);
+        barChart.lookup(".chart-plot-background").setStyle("-fx-background-color: black;");
 
     }
 

@@ -1,9 +1,8 @@
 .button {
     -fx-background-radius: 14;
-    -fx-text-fill: black;
-    -fx-background-color: #7dc4ff;
+    -fx-text-fill: lightblue;
+    -fx-background-color: #3279a8;
     -fx-font-size: 16px;
-    -fx-font-color:black;
     -fx-font-weight:bold;
 }
 
@@ -11,6 +10,13 @@
     -fx-background-color:#3279a8;
 }
 
+.bar-chart{
+
+    -fx-text-fill:black;
+    -fx-background-color:#2f2f2f;
+    -fx-background-radius:14;
+
+}
 #groundLayer{
     -fx-background-color:transparent;
     -fx-border-radius: 5, 5, 4, 3;
@@ -27,21 +33,26 @@
     -fx-background-radius: 30;
 }
 .label{
+    -fx-text-fill:white;
+
     -fx-font-size:12;
     -fx-font-style: normal;
     -fx-font-weight:bold;
 }
 .radio-button{
+    -fx-text-fill:white;
+    -fx-font-color:white;
     -fx-font-size:14;
     -fx-font-weight:bold;
 }
 .text-field{
-
-    -fx-background-color:#D3D3D3;
+    -fx-text-fill:white;
+    -fx-background-color:#2f2f2f;
     -fx-font-size: 12;
     -fx-font-weight:bold;
     -fx-border-color:#7d7d7d;
     -fx-border-radius:14;
+    -fx-background-radius:14;
 }
 .number-axis{
     -fx-font-size:15;

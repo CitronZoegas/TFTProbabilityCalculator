@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Circle?>
 
-<AnchorPane fx:id="groundLayer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="726.0" prefWidth="932.0" style="-fx-background-color: D3D3D3;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Controller">
+<AnchorPane fx:id="groundLayer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="726.0" prefWidth="932.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Controller">
    <children>
       <ImageView fitHeight="148.0" fitWidth="932.0" pickOnBounds="true">
          <image>
@@ -49,10 +49,10 @@
       </AnchorPane>
       <BarChart fx:id="barChart" cache="true" layoutX="286.0" layoutY="148.0" prefHeight="486.0" prefWidth="635.0">
         <xAxis>
-          <CategoryAxis label="Amount of Champions" side="BOTTOM" />
+          <CategoryAxis disable="true" label="Amount of Champions" side="BOTTOM" tickLabelFill="WHITE" tickLength="5.0" />
         </xAxis>
         <yAxis>
-          <NumberAxis fx:id="leftLabelOfBarChart" label="\% Chance to get X champion" prefHeight="424.0" prefWidth="75.0" side="LEFT" style="-fx-tick-label-font-size: 15;" />
+          <NumberAxis fx:id="leftLabelOfBarChart" label="\% Chance to get X champion" prefHeight="424.0" prefWidth="75.0" side="LEFT" style="-fx-tick-label-font-size: 15;" tickLabelFill="WHITE" />
         </yAxis>
       </BarChart>
       <TextField layoutX="649.0" layoutY="643.0" prefHeight="80.0" prefWidth="276.0" text="Notes:" />

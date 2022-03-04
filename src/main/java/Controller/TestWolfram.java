@@ -17,6 +17,7 @@ public class TestWolfram {
 
     public static double lastCalculatedValueNormal;
     public static double lastCalculatedValueSweat;
+    public static double lastCalculatedValueTwoUnits;
 
     /**
      * The logic behind the calculations can you find here: https://en.wikipedia.org/wiki/Binomial_distribution
@@ -140,7 +141,53 @@ public class TestWolfram {
 
         controller = new Controller();
         double ChampionPercentage = unitPercentagesArray[userLevel][championTier];
-        String expression2 = "1+-+(1+-+((1%2F6)("+ChampionPercentage+")))%5E210+%E2%80%93+((5/2)*"+amountOfGoldToRoll+")((1%2F6)("+ChampionPercentage+"))(1-(1%2F6)("+ChampionPercentage+"))%5E209+-+(1+-+(1+-+((1%2F6)(.15)))%5E70+%E2%80%93+(70)((1%2F6)(.15))(1-(1%2F6)(.15))%5E69)&format=image,plaintext&output=XML&appid="+appid;
+        String expression2 = "1+%E2%80%93+(1+%E2%80%93+("+ChampionPercentage+")%2F("+uniqueUnitAmount+"))%5E((5%2F2)*"+amountOfGoldToRoll+")+%E2%80%93+(5%2F2)*("+amountOfGoldToRoll+")("+ChampionPercentage+")("+uniqueUnitAmount+")(1+%E2%80%93+("+ChampionPercentage+"%2F"+uniqueUnitAmount+"))%5E((5%2F2)"+amountOfGoldToRoll+"+%E2%80%93+1)&format=image,plaintext&output=XML&appid="+appid;
+        String lol = "1 – (1 – (pCost)/(numUnits))^((5/2)g) – (5/2)g(pCost)(numUnits)(1 – (pCost/numUnits))^((5/2)g – 1)";
+        try{
+
+            URL url = new URL("https://api.wolframalpha.com/v2/query?input="+expression2);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.connect();
+
+            int responeNumber = conn.getResponseCode();
+
+            if(responeNumber != 200){
+                throw new RuntimeException("HttpResponeCode: " + responeNumber);
+            } else {
+
+                StringBuilder strBuild = new StringBuilder();
+                Scanner sc = new Scanner(url.openStream());
+
+                while(sc.hasNext()){
+                    strBuild.append(sc.nextLine());
+                }
+
+                sc.close();
+
+                for(int i = 0; i<strBuild.length(); i++){
+                    boolean isFound = strBuild.indexOf("plaintext") != -1;
+                    if(isFound){
+                        int index = ordinalIndexOf(String.valueOf(strBuild),"plaintext", 3);
+                        int lastIndex = index+6;
+                        System.out.println(strBuild);
+                        System.out.println(lastCalculatedValueTwoUnits);
+                        lastCalculatedValueTwoUnits = ((managePercentageOutput(String.valueOf(strBuild),index,lastIndex)));
+                        break;
+                    }
+                }
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+    public void calculateLvlOrStay(double[][] unitPercentagesArray, int uniqueUnitAmount, int amountOfGoldToRoll, int championTier, int userLevel) {
+
+        controller = new Controller();
+        double ChampionPercentage = unitPercentagesArray[userLevel][championTier];
+        String expression2 = "1+-+(1+-+((1%2F6)(((5/2)"+ChampionPercentage+")))%5E"+ChampionPercentage+"%E2%80%93+((5/2)*"+amountOfGoldToRoll+")((1%2F6)("+ChampionPercentage+"))(1-(1%2F6)("+ChampionPercentage+"))%5E209+-+(1+-+(1+-+((1%2F6)(.15)))%5E70+%E2%80%93+(70)((1%2F6)(.15))(1-(1%2F6)(.15))%5E69)&format=image,plaintext&output=XML&appid="+appid;
         try{
 
             URL url = new URL("https://api.wolframalpha.com/v2/query?input="+expression2);
@@ -201,6 +248,9 @@ public class TestWolfram {
 
     public double getLastCalculatedValueSweat() {
         return lastCalculatedValueSweat;
+    }
+    public double getlastCalculatedValueTwoUnits(){
+        return lastCalculatedValueTwoUnits;
     }
 
     /**
