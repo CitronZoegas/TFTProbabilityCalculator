@@ -28,3 +28,11 @@
  - Champion pool distribution displayed in a diagram.
  - Roll percentage of all champion tiers.
  - 
+
+
+Picture of how the application is looking at the moment (4b918f3)
+![bild](https://user-images.githubusercontent.com/81166713/156657769-642da216-41af-486c-9475-7244e6888539.png)
+
+
+A preview of one of the small features, The champion pool diagram (4b918f3)
+![bild](https://user-images.githubusercontent.com/81166713/156657818-e127dbc6-2ccb-4497-bf42-79abdd97750b.png)
