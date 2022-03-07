@@ -5,12 +5,17 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -46,7 +51,7 @@ public class Controller extends Thread implements Initializable {
     @FXML
     private Spinner<Integer> levelSpinner;
     final int initialValue = 1;
-    SpinnerValueFactory<Integer> svf = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,11,initialValue);
+    SpinnerValueFactory<Integer> spinnerValueForLevels = new SpinnerValueFactory.IntegerSpinnerValueFactory(1,11,initialValue);
     @FXML
     private BarChart<String,Number> barChart;
     @FXML
@@ -138,7 +143,7 @@ public class Controller extends Thread implements Initializable {
         setBarChartLabelx1();
         try{
             createLoadingCircles();
-            int userLevel = svf.getValue();
+            int userLevel = spinnerValueForLevels.getValue();
             double[][] percentagesOfHitting = (ChampionTierStats.getChampionPercentage());
             int uniqueUnitAmount = Integer.parseInt(numberOfCopies.getText());
 
@@ -170,7 +175,7 @@ public class Controller extends Thread implements Initializable {
         setBarChartLabelx1();
         try{
             createLoadingCircles();
-            int userLevel = svf.getValue();
+            int userLevel = spinnerValueForLevels.getValue();
             double[][] percentagesOfHitting = (ChampionTierStats.getChampionPercentage());
             int uniqueUnitAmount = Integer.parseInt(numberOfCopies.getText());
 
@@ -198,7 +203,7 @@ public class Controller extends Thread implements Initializable {
         setBarChartLabelx2();
         try{
             createLoadingCircles();
-            int userLevel = svf.getValue();
+            int userLevel = spinnerValueForLevels.getValue();
             double[][] percentagesOfHitting = (ChampionTierStats.getChampionPercentage());
             int uniqueUnitAmount = Integer.parseInt(numberOfCopies.getText());
 
@@ -353,17 +358,14 @@ public class Controller extends Thread implements Initializable {
         outerCircle.centerXProperty().bind(scene.widthProperty().divide(2));
         outerCircle.centerYProperty().bind(scene.heightProperty().divide(2));
         outerCircle.radiusProperty().bind(Bindings.min(scene.widthProperty(),scene.heightProperty()));*/
-        Thread cont = new Thread(new Runnable() {
-            @Override
-            public void run() {
+        Thread cont = new Thread(() -> {
 
-                System.out.println("working");
-                loadingScreenRotation(firstCircle,true,360,6);
-                loadingScreenRotation(secondCircle,true,180,1);
-                loadingScreenRotation(thirdCircle,true,140,1);
-                loadingScreenRotation(fourthCircle,true,70,1);
+            System.out.println("working");
+            loadingScreenRotation(firstCircle,true,360,6);
+            loadingScreenRotation(secondCircle,true,180,1);
+            loadingScreenRotation(thirdCircle,true,140,1);
+            loadingScreenRotation(fourthCircle,true,70,1);
 
-            }
         });
         cont.start();
     }
@@ -386,10 +388,6 @@ public class Controller extends Thread implements Initializable {
         loadingScreenRotation(secondCircle,true,180,18);
         loadingScreenRotation(thirdCircle,true,140,26);
         loadingScreenRotation(fourthCircle,true,70,34);
-    }
-    public void initilizeToolTipForBarChart() {
-        Tooltip diagramToolTip = new Tooltip();
-
     }
 
     public void championPoolDiagram(){
@@ -433,7 +431,7 @@ public class Controller extends Thread implements Initializable {
         loadingScreenRotation(thirdCircle,true,140,8);
         loadingScreenRotation(fourthCircle,true,70,13);
 
-        levelSpinner.setValueFactory(svf);
+        levelSpinner.setValueFactory(spinnerValueForLevels);
         testWolfram = new TestWolfram();
 
         /*series1.setName("1 Champion");
@@ -456,6 +454,32 @@ public class Controller extends Thread implements Initializable {
         barChart.lookup(".chart-plot-background").setStyle("-fx-background-color: black;");
 
     }
+    //Testing things.
+    /*public void initializePopUp() {
+
+        Scene scene = Main.getScene();
+        Popup pop = new Popup();
+
+        pop.setX(726);
+        pop.setY(932);
+
+        javafx.scene.control.Label label = new javafx.scene.control.Label("The calculations are done. ");
+        javafx.scene.control.Label labelESC = new Label("\n\n\nPress 'ESC' to remove the score text.");
+
+        label.setFont(new javafx.scene.text.Font("Arial",50));
+        label.setTextFill(javafx.scene.paint.Color.BLUE);
+
+        labelESC.setFont(new Font("Arial", 20));
+        labelESC.setTextFill(Color.RED);
+
+        pop.getContent().add(label);
+        pop.getContent().add(labelESC);
+
+        if(!pop.isShowing()){
+            pop.isHideOnEscape();
+            pop.show(scene);
+        }
+    }*/
 
     public void exitApplication() {
         Platform.exit();

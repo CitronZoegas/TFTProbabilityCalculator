@@ -1,7 +1,17 @@
 package Controller;
 
+import javafx.fxml.FXML;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.Font;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
 
+import java.awt.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.DecimalFormat;
@@ -12,7 +22,7 @@ public class TestWolfram {
     private Controller controller;
 
     private static final DecimalFormat df = new DecimalFormat();
-    private static final String appid = "XXXXX";
+    private static final String appid = "HP7H85-G52GUJARPY";
     private static final int MAX_THREADS = 10;
 
     public static double lastCalculatedValueNormal;
@@ -28,16 +38,18 @@ public class TestWolfram {
      * @param userLevel
      */
     public void calculateWolframNormal(double[][] unitPercentagesArray, int uniqueUnitAmount, int amountOfGoldToRoll, int championTier, int userLevel) {
-
+        controller = new Controller();
         double ChampionPercentage = unitPercentagesArray[userLevel][championTier];
-        String expression2 = "(1+%E2%80%93(1+%E2%80%93("+ChampionPercentage+")%2F("+uniqueUnitAmount+"))%5E((5%2F2)*"+amountOfGoldToRoll+"))&plaintext&output=XML&appid="+appid;
+
+        String expression1 = "+1-(5%2F2)"+amountOfGoldToRoll+"("+ChampionPercentage+")("+uniqueUnitAmount+")(1+%E2%80%93+("+ChampionPercentage+"%2F"+uniqueUnitAmount+"))%5E((5%2F2)"+amountOfGoldToRoll+"%E2%80%93+1)&appid="+appid;
 
         try{
 
-            URL url = new URL("https://api.wolframalpha.com/v2/query?input="+expression2);
+            URL url = new URL("https://api.wolframalpha.com/v2/query?input="+expression1);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.connect();
+
             int responeNumber = conn.getResponseCode();
 
             if(responeNumber != 200){
@@ -52,7 +64,7 @@ public class TestWolfram {
 
                 sc.close();
 
-                //System.out.println(strBuild); //This is to print everything grabbed by the API request
+                System.out.println(strBuild); //This is to print everything grabbed by the API request
                 for(int i = 0; i<strBuild.length(); i++){
                     boolean isFound = strBuild.indexOf("plaintext") != -1;
                     if(isFound){
@@ -67,8 +79,6 @@ public class TestWolfram {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Tooltip tooltip = new Tooltip();
-        tooltip.setText("Done");
     }
 
     /**
@@ -97,7 +107,6 @@ public class TestWolfram {
 
             if(responeNumber != 200){
                 throw new RuntimeException("HttpResponeCode: " + responeNumber);
-
             } else {
 
                 StringBuilder strBuild = new StringBuilder();
@@ -126,7 +135,6 @@ public class TestWolfram {
         catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     /**
@@ -141,11 +149,12 @@ public class TestWolfram {
 
         controller = new Controller();
         double ChampionPercentage = unitPercentagesArray[userLevel][championTier];
+        String expression1 = "1+-+(1+-+((1%2F10)(.15)))%5E(24)+-+(24)*((1%2F10)(.15))*(1-(1%2F10)(.15))%5E24&format=image,plaintext&output=XML&appid="+appid;
         String expression2 = "1+%E2%80%93+(1+%E2%80%93+("+ChampionPercentage+")%2F("+uniqueUnitAmount+"))%5E((5%2F2)*"+amountOfGoldToRoll+")+%E2%80%93+(5%2F2)*("+amountOfGoldToRoll+")("+ChampionPercentage+")("+uniqueUnitAmount+")(1+%E2%80%93+("+ChampionPercentage+"%2F"+uniqueUnitAmount+"))%5E((5%2F2)"+amountOfGoldToRoll+"+%E2%80%93+1)&format=image,plaintext&output=XML&appid="+appid;
-        String lol = "1 – (1 – (pCost)/(numUnits))^((5/2)g) – (5/2)g(pCost)(numUnits)(1 – (pCost/numUnits))^((5/2)g – 1)";
+        String lol = "1 – (1 – (1/12)/(numUnits))^((5/2)g) – (5/2)g(pCost)(numUnits)(1 – (pCost/numUnits))^((5/2)g – 1)";
         try{
 
-            URL url = new URL("https://api.wolframalpha.com/v2/query?input="+expression2);
+            URL url = new URL("https://api.wolframalpha.com/v2/query?input="+expression1);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.connect();

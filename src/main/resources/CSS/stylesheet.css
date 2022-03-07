@@ -7,7 +7,8 @@
 }
 
 .button:hover {
-    -fx-background-color:#3279a8;
+    -fx-background-color:lightblue;
+    -fx-text-fill:black;
 }
 
 .bar-chart{
