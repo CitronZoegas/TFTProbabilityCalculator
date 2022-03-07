@@ -2,6 +2,7 @@
 
  - Using JavaFX
  - WolframAlphaLibrary
+ - WolframAlpha API(ID needed)
  - Maven
 
 I created this app to make my decisionmaking in-game flawless.
