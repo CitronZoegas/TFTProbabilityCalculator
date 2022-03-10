@@ -6,6 +6,16 @@
  - Maven
 
 I created this app to make my decisionmaking in-game flawless.
+# How to run the application
+
+I'm using intellij IDE so I will explain it from a Intellij POV.
+ - Add JavaFX to your library.
+ - Add WolframAlpha library.
+ - Add "--module-path (and path to your JavaFX lib)"C:\Users\SmithSmith\.jdks\javafx-sdk-17.0.2\lib --add-modules javafx.controls,javafx.fxml" to your VM-Options.
+ - Add "--add-modules javafx.controls" to your CLI arguments. 
+ - Run and enjoy.
+
+
 
  Based on:
  - https://en.wikipedia.org/wiki/Binomial_distribution
