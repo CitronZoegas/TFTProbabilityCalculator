@@ -57,9 +57,8 @@ This application calculates odds of finding a specific tier champion depending o
  - Roll percentage of all champion tiers.
 
 
-Picture of how the application is looking at the moment (4b918f3)
-![bild](https://user-images.githubusercontent.com/81166713/156657769-642da216-41af-486c-9475-7244e6888539.png)
+Picture of how the application is looking at the moment (0e1f1bf)
+![bild](https://user-images.githubusercontent.com/81166713/157740557-09616feb-f061-4893-b5b3-4fbc7263624f.png)
 
-
-A preview of one of the small features, The champion pool diagram (4b918f3)
-![bild](https://user-images.githubusercontent.com/81166713/156657818-e127dbc6-2ccb-4497-bf42-79abdd97750b.png)
+A preview of one of the small features, The champion pool diagram (0e1f1bf)
+![bild](https://user-images.githubusercontent.com/81166713/157740813-99162bb9-2227-47bf-9ce1-fe17b29ec362.png)
