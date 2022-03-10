@@ -26,12 +26,12 @@ TFT is a turnbased autoplayer strategy game based on probability of a pool of 11
 # What do the application do?
 
 This application calculates odds of finding a specific tier champion depending on your input of:
- - Level, 
- - Gold, 
- - Champion-tier, 
- - How much gold to next level,
+ - Level
+ - Gold
+ - Champion-tier 
+ - How much gold to next level
  - How many champions of the tier thats gone(grabbed by other players) 
- - And how many champions you want(1 or 2).
+ - And how many champions you want(1 or 2)
  
  # What does the application output?
  
