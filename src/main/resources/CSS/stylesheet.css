@@ -55,6 +55,34 @@
     -fx-border-radius:14;
     -fx-background-radius:14;
 }
+.text-area{
+    -fx-text-fill:white;
+    -fx-background-color:#2f2f2f;
+    -fx-font-size: 12;
+    -fx-font-weight:bold;
+    -fx-border-color:#7d7d7d;
+    -fx-border-radius:14;
+    -fx-background-radius:14;
+}
+.text-area .content {
+        -fx-text-fill:white;
+        -fx-background-color:#2f2f2f;
+        -fx-font-size: 12;
+        -fx-font-weight:bold;
+        -fx-border-color:#7d7d7d;
+        -fx-border-radius:14;
+        -fx-background-radius:14;
+}
+.text-area .scroll-pane {
+        -fx-background-color:transparent;
+}
+.text-area .scroll-pane .viewport{
+        -fx-background-color:transparent;
+}
+.text-area .scroll-pane .content{
+        -fx-background-color:transparent;
+}
+
 .number-axis{
     -fx-font-size:15;
 }

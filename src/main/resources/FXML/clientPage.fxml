@@ -7,17 +7,18 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Circle?>
 
-<AnchorPane fx:id="groundLayer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="726.0" prefWidth="932.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Controller">
+<AnchorPane fx:id="groundLayer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="726.0" prefWidth="932.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.Controller">
    <children>
-      <ImageView fitHeight="148.0" fitWidth="932.0" pickOnBounds="true">
+      <ImageView fitHeight="726.0" fitWidth="932.0">
          <image>
-            <Image url="@../Images/topImage.jpeg" />
+            <Image url="@../Images/dragonHeim4k.jpg" />
          </image>
       </ImageView>
       <AnchorPane layoutY="163.0" prefHeight="564.0" prefWidth="266.0">
@@ -32,8 +33,9 @@
             <TextField fx:id="numberOfCopies" layoutX="4.0" layoutY="236.0" prefHeight="37.0" prefWidth="251.0" text="0" />
             <Button layoutX="4.0" layoutY="282.0" mnemonicParsing="false" onAction="#calculateNormal" prefHeight="37.0" prefWidth="251.0" text="Calculate" />
             <TextField layoutX="4.0" layoutY="414.0" prefHeight="37.0" prefWidth="251.0" text="0" />
-            <TextField layoutX="4.0" layoutY="481.0" prefHeight="37.0" prefWidth="251.0" text="0" />
+            <TextField fx:id="goldToLevel" layoutX="4.0" layoutY="481.0" prefHeight="37.0" prefWidth="251.0" text="0" />
             <Button layoutX="4.0" layoutY="522.0" mnemonicParsing="false" onAction="#updateSweatCharts" prefHeight="37.0" prefWidth="251.0" text="Sweat Calculate" />
+            <Button layoutX="4.0" layoutY="322.0" mnemonicParsing="false" onAction="#calculateNormalTimesTwo" prefHeight="37.0" prefWidth="251.0" text="Calculate x2 " />
             <Label layoutX="4.0" layoutY="3.0" prefHeight="37.0" prefWidth="251.0" text="CHAMPION TIER:" />
             <Label layoutX="4.0" layoutY="194.0" prefHeight="17.0" prefWidth="92.0" text="NUMBER OF" />
             <Label layoutX="84.0" layoutY="194.0" prefHeight="17.0" prefWidth="10.0" text="X" />
@@ -44,7 +46,6 @@
             <Label layoutX="4.0" layoutY="451.0" prefHeight="37.0" prefWidth="251.0" text="HOW MUCH GOLD TO LEVEL:" />
             <Label layoutX="9.0" layoutY="140.0" prefHeight="17.0" prefWidth="251.0" text="WHAT IS YOUR LEVEL:" />
             <Label layoutX="4.0" layoutY="381.0" prefHeight="25.0" prefWidth="244.0" text="HOW MANY CHAMPIONS DO YOU WANT" />
-            <Button layoutX="4.0" layoutY="322.0" mnemonicParsing="false" onAction="#calculateNormalTimesTwo" prefHeight="37.0" prefWidth="251.0" text="Calculate x2 " />
          </children>
       </AnchorPane>
       <BarChart fx:id="barChart" cache="true" layoutX="286.0" layoutY="148.0" prefHeight="486.0" prefWidth="635.0">
@@ -55,14 +56,15 @@
           <NumberAxis fx:id="leftLabelOfBarChart" label="\% Chance to get X champion" prefHeight="424.0" prefWidth="75.0" side="LEFT" style="-fx-tick-label-font-size: 15;" tickLabelFill="WHITE" />
         </yAxis>
       </BarChart>
-      <TextField layoutX="649.0" layoutY="643.0" prefHeight="80.0" prefWidth="276.0" text="Notes:" />
-      <Button layoutX="288.0" layoutY="685.0" mnemonicParsing="false" onAction="#updateNormalCharts" prefHeight="37.0" prefWidth="357.0" text="Update Diagram" />
+      <Button layoutX="288.0" layoutY="686.0" mnemonicParsing="false" onAction="#updateNormalCharts" prefHeight="37.0" prefWidth="357.0" text="Update Diagram" />
       <Circle fx:id="firstCircle" fill="#2197ff00" layoutX="77.0" layoutY="79.0" radius="65.0" stroke="#7dc4ff" strokeDashOffset="15.0" strokeType="INSIDE" strokeWidth="8.0" style="-fx-stroke-dash-array: 50;" />
       <Circle fx:id="secondCircle" fill="#2197ff00" layoutX="77.0" layoutY="79.0" radius="29.0" stroke="#7dc4ff" strokeDashOffset="15.0" strokeType="INSIDE" strokeWidth="8.0" style="-fx-stroke-dash-array: 50;" />
       <Circle fx:id="thirdCircle" fill="#2197ff00" layoutX="77.0" layoutY="79.0" radius="17.0" stroke="#7dc4ff" strokeDashOffset="15.0" strokeType="INSIDE" strokeWidth="6.0" style="-fx-stroke-dash-array: 27;" />
       <Circle fx:id="fourthCircle" fill="#2197ff00" layoutX="77.0" layoutY="79.0" radius="46.0" stroke="#7dc4ff" strokeDashOffset="15.0" strokeType="INSIDE" strokeWidth="8.0" style="-fx-stroke-dash-array: 70;" />
       <Button layoutX="853.0" layoutY="1.0" mnemonicParsing="false" onAction="#exitApplication" prefHeight="64.0" prefWidth="77.0" text="X" />
-      <Button layoutX="172.0" layoutY="1.0" mnemonicParsing="false" onAction="#championPoolDiagram" prefHeight="37.0" prefWidth="181.0" text="Champion pools" />
-      <Button layoutX="358.0" layoutY="1.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="162.0" text="Roll Percentage" />
+      <Button layoutX="505.0" layoutY="1.0" mnemonicParsing="false" onAction="#championPoolDiagram" prefHeight="38.0" prefWidth="160.0" text="Champion pools" />
+      <Button layoutX="682.0" layoutY="1.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="150.0" text="Roll Percentage" />
+      <TextArea fx:id="notesTextArea" layoutX="657.0" layoutY="643.0" prefHeight="82.0" prefWidth="251.0" promptText="Instructions:" style="-fx-background-color: #2f2f2f;" />
+      <Button layoutX="288.0" layoutY="644.0" mnemonicParsing="false" onAction="#calculateToLevelOrNot" prefHeight="37.0" prefWidth="357.0" text="CalculateLevelOrNot" />
    </children>
 </AnchorPane>

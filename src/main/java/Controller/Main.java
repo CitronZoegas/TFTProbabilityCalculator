@@ -20,10 +20,12 @@ import java.util.Objects;
 public class Main extends Application {
 
     public static Main instance;
+    public static Stage shareStage;
     private Controller controller;
     private TestWolfram testWolfram;
     @Override
     public void start(Stage stage) {
+        shareStage = stage;
         try{
             controller = new Controller();
             initializeConnection();

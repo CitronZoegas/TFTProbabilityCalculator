@@ -5,24 +5,24 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.text.Font;
-import javafx.stage.Popup;
-import javafx.stage.Stage;
 import javafx.util.Duration;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Controller extends Thread implements Initializable {
     //final CategoryAxis xAxis = new CategoryAxis();
     //final NumberAxis yAxis = new NumberAxis();
+    @FXML
+    private TextArea notesTextArea;
+    @FXML
+    private TextField goldToLevel;
     @FXML
     private AnchorPane groundLayer;
     @FXML
@@ -47,6 +47,8 @@ public class Controller extends Thread implements Initializable {
     private Circle thirdCircle;
     @FXML
     private Circle fourthCircle;
+    @FXML
+    private AnchorPane menuPane;
 
     @FXML
     private Spinner<Integer> levelSpinner;
@@ -209,14 +211,42 @@ public class Controller extends Thread implements Initializable {
 
             TestWolfram twf = new TestWolfram();
             Thread calculateThread = new Thread(() -> {
+
                 twf.calculateTwoUnits((percentagesOfHitting),uniqueUnitAmount,getHowMuchGold(),ChampionTierStats.getChampionCost(),userLevel);
 
                 loadingScreenRotation(firstCircle,true,360,6);
                 loadingScreenRotation(secondCircle,true,180,1);
                 loadingScreenRotation(thirdCircle,true,140,1);
                 loadingScreenRotation(fourthCircle,true,70,1);
-
             });
+            calculateThread.start();
+            clearCharts();
+        } catch (Exception e) {
+            System.out.println("You have not calculated anything yet.");
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void calculateToLevelOrNot() {
+        setBarChartLabelx2();
+        try{
+            createLoadingCircles();
+            int userLevel = spinnerValueForLevels.getValue();
+            double[][] percentagesOfHitting = (ChampionTierStats.getChampionPercentage());
+            int uniqueUnitAmount = Integer.parseInt(numberOfCopies.getText());
+
+            TestWolfram twf = new TestWolfram();
+            Thread calculateThread = new Thread(() -> {
+
+                twf.calculateLevelBeforeRollDownOrNot((percentagesOfHitting),uniqueUnitAmount,getHowMuchGold(),ChampionTierStats.getChampionCost(),userLevel, getGoldToLevel());
+
+                loadingScreenRotation(firstCircle,true,360,6);
+                loadingScreenRotation(secondCircle,true,180,1);
+                loadingScreenRotation(thirdCircle,true,140,1);
+                loadingScreenRotation(fourthCircle,true,70,1);
+            });
+
             calculateThread.start();
             clearCharts();
         } catch (Exception e) {
@@ -226,6 +256,9 @@ public class Controller extends Thread implements Initializable {
 
     }
 
+    private double getGoldToLevel() {
+        return Double.parseDouble(goldToLevel.getText());
+    }
     private int getHowMuchGold() {
         return Integer.parseInt(amountOfGold.getText());
     }
@@ -307,10 +340,17 @@ public class Controller extends Thread implements Initializable {
         if (testWolfram.getLastCalculatedValueSweat() > 0 || validateDoubleInput(testWolfram.getLastCalculatedValueSweat())){
             series2.getData().add(new XYChart.Data("1 Champion",testWolfram.getLastCalculatedValueSweat()));
         }
+
         if(testWolfram.getlastCalculatedValueTwoUnits() > 0 || validateDoubleInput(testWolfram.getlastCalculatedValueTwoUnits())){
             series3.getData().add(new XYChart.Data("2 Champions",testWolfram.getlastCalculatedValueTwoUnits()));
         }
-
+        if(testWolfram.getLastCalculatedLevelOrNot() <0){
+            notesTextArea.setText("It's better to level first and roll after by:\n "+ testWolfram.getLastCalculatedLevelOrNot()+"%");
+        }
+        if(testWolfram.getLastCalculatedLevelOrNot()>0 || validateDoubleInput(testWolfram.getLastCalculatedLevelOrNot())){
+            series4.getData().add(new XYChart.Data("LevelOrNa",testWolfram.getLastCalculatedLevelOrNot()));
+            notesTextArea.setText("It's better to stay and roll by: \n "+testWolfram.getLastCalculatedLevelOrNot()+"%");
+        }
 
     }
     public void updateSweatCharts() {
@@ -452,6 +492,18 @@ public class Controller extends Thread implements Initializable {
         barChart.getData().addAll(series4);
         barChart.getData().addAll(series5);
         barChart.lookup(".chart-plot-background").setStyle("-fx-background-color: black;");
+
+        MouseXY mouse = new MouseXY();
+
+        groundLayer.setOnMousePressed(mouseEvent -> {
+            mouse.setX(mouseEvent.getX());
+            mouse.setY(mouseEvent.getY());
+        });
+
+        groundLayer.setOnMouseDragged(mouseEvent ->{
+            Main.shareStage.getScene().getWindow().setX(mouseEvent.getScreenX() - mouse.getX());
+            Main.shareStage.getScene().getWindow().setY(mouseEvent.getScreenY() - mouse.getY());
+        });
 
     }
     //Testing things.

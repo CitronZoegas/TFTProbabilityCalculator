@@ -1,5 +1,6 @@
 package Controller;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -28,6 +29,7 @@ public class TestWolfram {
     public static double lastCalculatedValueNormal;
     public static double lastCalculatedValueSweat;
     public static double lastCalculatedValueTwoUnits;
+    public static double lastCalculatedLevelOrNot;
 
     /**
      * The logic behind the calculations can you find here: https://en.wikipedia.org/wiki/Binomial_distribution
@@ -40,12 +42,14 @@ public class TestWolfram {
     public void calculateWolframNormal(double[][] unitPercentagesArray, int uniqueUnitAmount, int amountOfGoldToRoll, int championTier, int userLevel) {
         controller = new Controller();
         double ChampionPercentage = unitPercentagesArray[userLevel][championTier];
-
-        String expression1 = "+1-(5%2F2)"+amountOfGoldToRoll+"("+ChampionPercentage+")("+uniqueUnitAmount+")(1+%E2%80%93+("+ChampionPercentage+"%2F"+uniqueUnitAmount+"))%5E((5%2F2)"+amountOfGoldToRoll+"%E2%80%93+1)&appid="+appid;
+        //(1 – (1 – (pCost)/(numUnits))^((5/2)g))
+        String strTheRight = "(5%2F2)40(.15)(12)(1+–+(.15%2F12))^((5%2F2)40–+1)&appid="+appid;
+        String strExpression1 = "(1+–+(1+–+("+ChampionPercentage+")%2F"+uniqueUnitAmount+"))^((5%2F2)"+amountOfGoldToRoll+")";
+        String expression1 = "(5%2F2)"+amountOfGoldToRoll+"("+ChampionPercentage+")("+uniqueUnitAmount+")(1+%E2%80%93+("+ChampionPercentage+"%2F"+uniqueUnitAmount+"))%5E((5%2F2)"+amountOfGoldToRoll+"%E2%80%93-1)&appid="+appid;
 
         try{
 
-            URL url = new URL("https://api.wolframalpha.com/v2/query?input="+expression1);
+            URL url = new URL("https://api.wolframalpha.com/v2/query?input="+strTheRight);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.connect();
@@ -149,9 +153,11 @@ public class TestWolfram {
 
         controller = new Controller();
         double ChampionPercentage = unitPercentagesArray[userLevel][championTier];
-        String expression1 = "1+-+(1+-+((1%2F10)(.15)))%5E(24)+-+(24)*((1%2F10)(.15))*(1-(1%2F10)(.15))%5E24&format=image,plaintext&output=XML&appid="+appid;
-        String expression2 = "1+%E2%80%93+(1+%E2%80%93+("+ChampionPercentage+")%2F("+uniqueUnitAmount+"))%5E((5%2F2)*"+amountOfGoldToRoll+")+%E2%80%93+(5%2F2)*("+amountOfGoldToRoll+")("+ChampionPercentage+")("+uniqueUnitAmount+")(1+%E2%80%93+("+ChampionPercentage+"%2F"+uniqueUnitAmount+"))%5E((5%2F2)"+amountOfGoldToRoll+"+%E2%80%93+1)&format=image,plaintext&output=XML&appid="+appid;
-        String lol = "1 – (1 – (1/12)/(numUnits))^((5/2)g) – (5/2)g(pCost)(numUnits)(1 – (pCost/numUnits))^((5/2)g – 1)";
+        double maxAmountOfChampionSquares = (2.5*amountOfGoldToRoll);
+        System.out.println(maxAmountOfChampionSquares);
+
+        String expression1 = "1+-+(1+-+((1%2F"+uniqueUnitAmount+")("+ChampionPercentage+")))^("+maxAmountOfChampionSquares+")+–+("+maxAmountOfChampionSquares+")((1%2F"+uniqueUnitAmount+")("+ChampionPercentage+"))(1-(1%2F"+uniqueUnitAmount+")("+ChampionPercentage+"))^"+maxAmountOfChampionSquares+"-1&appid="+appid;
+
         try{
 
             URL url = new URL("https://api.wolframalpha.com/v2/query?input="+expression1);
@@ -181,7 +187,7 @@ public class TestWolfram {
                         int lastIndex = index+6;
                         System.out.println(strBuild);
                         System.out.println(lastCalculatedValueTwoUnits);
-                        lastCalculatedValueTwoUnits = ((managePercentageOutput(String.valueOf(strBuild),index,lastIndex)));
+                        lastCalculatedValueTwoUnits = ((managePercentageOutputForDecimals(String.valueOf(strBuild),index,lastIndex)));
                         break;
                     }
                 }
@@ -192,11 +198,16 @@ public class TestWolfram {
         }
 
     }
-    public void calculateLvlOrStay(double[][] unitPercentagesArray, int uniqueUnitAmount, int amountOfGoldToRoll, int championTier, int userLevel) {
+
+    public void calculateLevelBeforeRollDownOrNot(double[][] unitPercentagesArray, int uniqueUnitAmount, int amountOfGoldToRoll, int championTier, int userLevel, double goldToLevel) {
 
         controller = new Controller();
         double ChampionPercentage = unitPercentagesArray[userLevel][championTier];
-        String expression2 = "1+-+(1+-+((1%2F6)(((5/2)"+ChampionPercentage+")))%5E"+ChampionPercentage+"%E2%80%93+((5/2)*"+amountOfGoldToRoll+")((1%2F6)("+ChampionPercentage+"))(1-(1%2F6)("+ChampionPercentage+"))%5E209+-+(1+-+(1+-+((1%2F6)(.15)))%5E70+%E2%80%93+(70)((1%2F6)(.15))(1-(1%2F6)(.15))%5E69)&format=image,plaintext&output=XML&appid="+appid;
+        double ChampionPercentagePlusOne = unitPercentagesArray[userLevel+1][championTier];
+        double maxAmountOfChampionSquares = (2.5*amountOfGoldToRoll);
+        double amountOfChampionSquaresLostOnLeveling = (2.5*goldToLevel);
+        String expression1 = "1+-+(1+-+((1%2F"+uniqueUnitAmount+")("+ChampionPercentage+")))^("+maxAmountOfChampionSquares+")+–+("+maxAmountOfChampionSquares+")((1%2F"+uniqueUnitAmount+")("+ChampionPercentage+"))(1-(1%2F"+uniqueUnitAmount+")("+ChampionPercentage+"))^"+maxAmountOfChampionSquares+"-1  - (1 - (1 - ((1/"+uniqueUnitAmount+")("+ChampionPercentagePlusOne+")))^"+amountOfChampionSquaresLostOnLeveling+" – ("+amountOfChampionSquaresLostOnLeveling+")((1/"+uniqueUnitAmount+")("+ChampionPercentagePlusOne+"))(1-(1/"+uniqueUnitAmount+")("+ChampionPercentagePlusOne+"))^"+amountOfChampionSquaresLostOnLeveling+"-1)&appid="+appid;
+        String expression2 = "1+-+(1+-+((1%2F"+uniqueUnitAmount+")("+ChampionPercentage+")))^"+maxAmountOfChampionSquares+"+–+("+maxAmountOfChampionSquares+")((1%2F"+uniqueUnitAmount+")("+ChampionPercentage+"))(1-(1%2F"+uniqueUnitAmount+")("+ChampionPercentage+"))^"+maxAmountOfChampionSquares+"-1+-+(1+-+(1+-+((1%2F"+uniqueUnitAmount+")("+ChampionPercentagePlusOne+")))^"+amountOfChampionSquaresLostOnLeveling+"+–+("+amountOfChampionSquaresLostOnLeveling+")((1%2F"+uniqueUnitAmount+")("+ChampionPercentagePlusOne+"))(1-(1%2F"+uniqueUnitAmount+")("+ChampionPercentagePlusOne+"))^"+amountOfChampionSquaresLostOnLeveling+"-1)&appid="+appid;
         try{
 
             URL url = new URL("https://api.wolframalpha.com/v2/query?input="+expression2);
@@ -212,7 +223,7 @@ public class TestWolfram {
 
                 StringBuilder strBuild = new StringBuilder();
                 Scanner sc = new Scanner(url.openStream());
-
+                System.out.println(strBuild);
                 while(sc.hasNext()){
                     strBuild.append(sc.nextLine());
                 }
@@ -224,7 +235,9 @@ public class TestWolfram {
                     if(isFound){
                         int index = ordinalIndexOf(String.valueOf(strBuild),"plaintext", 3);
                         int lastIndex = index+6;
-                        lastCalculatedValueSweat = ((managePercentageOutput(String.valueOf(strBuild),index,lastIndex)));
+                        System.out.println(strBuild);
+                        System.out.println(lastCalculatedLevelOrNot);
+                        lastCalculatedLevelOrNot = ((managePercentageOutputForDecimals(String.valueOf(strBuild),index,lastIndex)));
                         break;
                     }
                 }
@@ -233,35 +246,57 @@ public class TestWolfram {
         catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
+    /**
+     * Getting correct output from API GET request
+     *
+     * @param originalString
+     * @param firstIndex
+     * @param lastIndex
+     * @return percentageOutput
+     */
+    public double managePercentageOutput(String originalString, int firstIndex, int lastIndex) {
+
+        String percentageOutput = originalString.substring(firstIndex,lastIndex);
+        return Double.parseDouble(percentageOutput);
+
+    }
     /**
      * Getting correct output from API GET request
      * Multiplying return value by 100 to get the correct presentation for a % number.
      * @param originalString
      * @param firstIndex
      * @param lastIndex
-     * @return
+     * @return percentageOutput
      */
-    public double managePercentageOutput(String originalString, int firstIndex, int lastIndex) {
-
+    public double managePercentageOutputForDecimals(String originalString, int firstIndex, int lastIndex) {
         String percentageOutput = originalString.substring(firstIndex,lastIndex);
+        try{
+            double value = Double.parseDouble(percentageOutput);
+            if(value <0){
+                //negative
+                return Math.abs(value)*100;
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        //positive
         return Double.parseDouble(percentageOutput)*100;
-
     }
 
     public double getLastCalculatedValueNormal() {
         return lastCalculatedValueNormal;
     }
-
     public double getLastCalculatedValueSweat() {
         return lastCalculatedValueSweat;
     }
     public double getlastCalculatedValueTwoUnits(){
         return lastCalculatedValueTwoUnits;
     }
-
+    public double getLastCalculatedLevelOrNot(){
+        return lastCalculatedLevelOrNot;
+    }
     /**
      * To use this method elsewhere, remove the "+10" in the return statement.
      *
